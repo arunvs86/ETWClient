@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F6F4F1;
+  --color-surface: #FFFFFF;
+  --color-text: #0F172A;
+  --color-primary: #4682B4;
+  --color-accent: #4682B4;
+  --color-highlight: #F4A261;
+  --color-warning: #E76F51;
+  --color-muted: #E9C46A;
+  --color-border: #E5E7EB;
+  --radius-lg: 12px;
+  --shadow-card: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body { @apply bg-bg text-text antialiased; }
+  a { @apply text-accent hover:underline; }
+  :focus-visible { @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg; }
+}
+
+@utility container-app { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+@layer components { .card { @apply bg-surface border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-card)]; } }
