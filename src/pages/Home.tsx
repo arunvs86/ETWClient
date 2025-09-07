@@ -282,7 +282,7 @@ export default function Home() {
       {state !== 'GUEST' && <ContinueLearningRail />}
 
       {/* TRENDING */}
-      <section className="container-app space-y-6">
+      {/* <section className="container-app space-y-6">
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold">Trending now</h2>
@@ -299,10 +299,10 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Explore (carousel) */}
-      <section className="bg-[rgba(245,247,250,0.6)]">
+      {/* <section className="bg-[rgba(245,247,250,0.6)]">
         <div className="container-app space-y-6 py-12">
           <div className="flex items-end justify-between">
             <div>
@@ -321,7 +321,7 @@ export default function Home() {
             ))}
           </HScroll>
         </div>
-      </section>
+      </section> */}
 
       {/* Why choose – hide for members */}
       {state !== 'USER_MEM' && (
@@ -420,11 +420,11 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a href="https://chat.whatsapp.com/" target="_blank" rel="noreferrer"
+              <a href="https://chat.whatsapp.com/J7VsK9IUuP6CQypYRIlyJC" target="_blank" rel="noreferrer"
                  className="rounded-full border bg-white px-5 py-2 text-sm hover:bg-gray-50">
                 For a career in Medicine
               </a>
-              <a href="https://chat.whatsapp.com/" target="_blank" rel="noreferrer"
+              <a href="https://chat.whatsapp.com/D8NOwTp38XfANaWLWnrclv" target="_blank" rel="noreferrer"
                  className="rounded-full border bg-white px-5 py-2 text-sm hover:bg-gray-50">
                 Information on University courses
               </a>
