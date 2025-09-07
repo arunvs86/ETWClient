@@ -3,11 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 
-/**
- * Watches the URL for `?session_id=...` (Stripe Checkout success)
- * Calls POST /purchase/sync once, then invalidates user-facing caches
- * and cleans query params from the URL.
- */
 export default function StripeSuccessWatcher() {
   const { search } = useLocation();
   const qc = useQueryClient();
