@@ -42,7 +42,7 @@ export default function Login() {
   }
 
   // optional: while we check auth, show nothing (prevents flicker)
-  if (loading) return null;
+  // if (loading) return null;
 
   return (
     <div className="max-w-md mx-auto card p-6 space-y-4">
