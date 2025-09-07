@@ -89,6 +89,7 @@ export default function App() {
       <main className="flex-1">
         <div className="container-app py-6">
           <Routes>
+            <Route path="/_ping" element={<div style={{padding:20,fontSize:24}}>ROUTER OK</div>} />
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<CoursesList />} />
 
