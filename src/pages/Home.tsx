@@ -143,6 +143,59 @@ function useVisibleCards() {
   }, []);
   return n;
 }
+
+// Add above ReviewsCarousel
+function ReviewCard({ r }: { r: (typeof REVIEWS)[number] }) {
+  const [open, setOpen] = useState(false);
+  const isLong = r.quote.length > 260; // tweak threshold as you like
+
+  return (
+    <div className="rounded-2xl bg-gradient-to-br from-white to-primary/[0.03] p-6 ring-1 ring-black/5 flex h-full flex-col">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div className="h-10 w-10 rounded-full bg-primary/15 flex items-center justify-center font-semibold">
+          {r.name.split(" ").map((s) => s[0]).join("").slice(0,2)}
+        </div>
+        <div>
+          <div className="font-medium">{r.name}</div>
+          {/* <div className="text-xs text-muted-foreground">{r.role}</div> */}
+        </div>
+      </div>
+
+      {/* Quote */}
+      <div className="mt-4 relative">
+        <p className={`text-sm leading-relaxed ${!open ? "line-clamp-5" : ""}`}>
+          “{r.quote}”
+        </p>
+
+        {/* subtle fade when clamped */}
+        {!open && isLong && (
+          <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-8 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-transparent" />
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="mt-3 flex items-center justify-between">
+        <div className="text-amber-600 text-sm">
+          {"★".repeat(Math.floor(r.rating))}{"☆".repeat(5 - Math.floor(r.rating))}
+          <span className="text-muted-foreground"> ({r.rating}/5)</span>
+        </div>
+
+        {isLong && (
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="text-xs font-medium text-primary hover:underline"
+          >
+            {open ? "Show less" : "Read more"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
 function ReviewsCarousel({ items }: { items: typeof REVIEWS }) {
   const visible = useVisibleCards();
   const totalPages = Math.max(10, Math.ceil(items.length / visible));
@@ -171,29 +224,16 @@ function ReviewsCarousel({ items }: { items: typeof REVIEWS }) {
           style={{ transform: `translateX(-${(100 / visible) * page}%)` }}
         >
           {items.map((r, i) => (
-            <article
-              key={i}
-              className="min-w-full md:min-w-1/2 lg:min-w-1/3 px-3"
-              style={{ minWidth: `${100 / visible}%` }}
-            >
-              <div className="h-full rounded-2xl bg-gradient-to-br from-white to-primary/[0.03] p-6 ring-1 ring-black/5">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-primary/15 flex items-center justify-center font-semibold">
-                    {r.name.split(" ").map((s) => s[0]).join("").slice(0,2)}
-                  </div>
-                  <div>
-                    <div className="font-medium">{r.name}</div>
-                    {/* <div className="text-xs text-muted-foreground">{r.role}</div> */}
-                  </div>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed">“{r.quote}”</p>
-                <div className="mt-3 text-amber-600 text-sm">
-                  {"★".repeat(Math.floor(r.rating))}{"☆".repeat(5 - Math.floor(r.rating))}
-                  <span className="text-muted-foreground"> ({r.rating}/5)</span>
-                </div>
-              </div>
-            </article>
-          ))}
+  <article
+    key={i}
+    className="min-w-full md:min-w-1/2 lg:min-w-1/3 px-3"
+    style={{ minWidth: `${100 / visible}%` }}
+  >
+    {/* remove fixed 'h-full' so cards aren't forced to the tallest one */}
+    <ReviewCard r={r} />
+  </article>
+))}
+
         </div>
       </div>
 

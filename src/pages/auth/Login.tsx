@@ -11,7 +11,7 @@ export default function Login() {
   const [err, setErr] = useState<string | null>(null)
   const nav = useNavigate()
   const loc = useLocation()
-  const next = new URLSearchParams(loc.search).get('next') || '/me/enrollments'
+  const next = new URLSearchParams(loc.search).get('next') || '/'
 
   // ⬇️ if already logged in, leave /login immediately
   useEffect(() => {

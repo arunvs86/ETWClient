@@ -60,6 +60,7 @@ import ResourcePublic from './pages/public/ResourcePublic'
 import SuccessPage from './pages/billing/SuccessPage'
 
 import ComingSoon from "./pages/ComingSoon";
+import AttemptsIndex from '@/pages/quizzes/AttemptsIndex'
 
 import { useEffect } from 'react';
 import { refreshAccessToken, getAccessToken } from '../src/lib/api';
@@ -122,10 +123,12 @@ export default function App() {
               <Route path="/instructor/quizzes/:id" element={<QuizRootRedirect />} />
               <Route path="/instructor/quizzes/:id/questions" element={<QuestionStudio />} />
 
+              <Route path="/quizzes/attempts" element={<AttemptsIndex />} />
+              <Route path="/quizzes/attempts/:attemptId" element={<QuizResultPage />} />
+
               <Route path="/quizzes" element={<PublicQuizListPage />} />
               <Route path="/quizzes/:slug" element={<PublicQuizViewPage />} />
               <Route path="/quizzes/:slug/play" element={<QuizPlayPage />} />
-              <Route path="/quizzes/attempts/:attemptId" element={<QuizResultPage />} />
 
               <Route path="/instructor/live" element={<MyLiveSessionsPage />} />
               <Route path="/instructor/live/new" element={<NewLiveSession />} />
