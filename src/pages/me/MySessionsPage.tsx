@@ -105,45 +105,45 @@ export default function MySessionsPage() {
                   </div>
 
                   {/* Meeting Link */}
-                  {s.status === 'confirmed' && s.meetingLink && (
+                  {/* {s.status === 'confirmed' && s.meetingLink && (
                     <div className="mt-2">
                       <a href={s.meetingLink} target="_blank" className="text-blue-700 text-sm underline">Join meeting</a>
                     </div>
-                  )}
+                  )} */}
 
                   {/* Cancel request info */}
-                  {s.cancelRequest?.requestedAt && (
+                  {/* {s.cancelRequest?.requestedAt && (
                     <div className="mt-2 text-xs text-amber-700 bg-amber-50 inline-block px-2 py-1 rounded">
                       Cancel requested: “{s.cancelRequest.reason}” (pending tutor approval)
                     </div>
-                  )}
+                  )} */}
 
                   {/* Actions */}
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {/* Cancel (>24h allowed) */}
+                  {/* <div className="mt-3 flex flex-wrap gap-2">
+                    Cancel (>24h allowed)
                     {s.status === 'confirmed' && !isPast(s.startAt) && (
                       <button
                         className="rounded-xl border px-3 py-1.5 text-sm"
                         onClick={() => onCancel(s._id)}
                       >Cancel</button>
-                    )}
+                    )} */}
 
                     {/* Request cancel (<=24h) */}
-                    {s.status === 'confirmed' && !isPast(s.startAt) && (
+                    {/* {s.status === 'confirmed' && !isPast(s.startAt) && (
                       <button
                         className="rounded-xl border px-3 py-1.5 text-sm"
                         onClick={() => onRequestCancel(s._id)}
                       >Request cancel</button>
-                    )}
+                    )} */}
 
                     {/* Reschedule (>24h only per backend rule) */}
-                    {s.status === 'confirmed' && !isPast(s.startAt) && (
+                    {/* {s.status === 'confirmed' && !isPast(s.startAt) && (
                       <button
                         className="rounded-xl border px-3 py-1.5 text-sm"
                         onClick={() => setReschedId(s._id)}
                       >Reschedule</button>
-                    )}
-                  </div>
+                    )} */}
+                  {/* </div> */}
                 </div>
               );
             })}

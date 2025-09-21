@@ -11,6 +11,12 @@ export type LiveSessionPricing = {
   currency?: Currency;
 };
 
+export type ZoomInput = {
+  joinUrl?: string;
+  passcode?: string;
+  startUrl?: string;
+};
+
 export type PublicLiveSession = {
   id: string;
   hostUserId: string;
@@ -47,6 +53,7 @@ export type CreateLiveSessionBody = {
   pricing?: { type: 'free' | 'paid'; amountMinor?: number; currency?: Currency };
   membersAccess?: MembersAccess;
   thumbnail?: string;
+  zoom?: ZoomInput;           // ← NEW
 };
 
 export type EntitlementResponse =
@@ -99,6 +106,12 @@ export async function joinLiveSession(id: string) {
 /* ---------- Instructor actions ---------- */
 export async function createLiveSession(body: CreateLiveSessionBody) {
   const { data } = await api.post<PublicLiveSession>('/live-sessions', body);
+  const s: any = data;
+  return { ...s, id: s.id ?? s._id } as PublicLiveSession;
+}
+
+export async function updateLiveSession(id: string, body: Partial<CreateLiveSessionBody>) {
+  const { data } = await api.patch<PublicLiveSession>(`/live-sessions/${encodeURIComponent(id)}`, body);
   const s: any = data;
   return { ...s, id: s.id ?? s._id } as PublicLiveSession;
 }

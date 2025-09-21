@@ -4,6 +4,7 @@ import Button from "../components/ui/Button";
 import { useAuth } from "@/context/AuthProvider";
 import { useMembership } from "@/hooks/useMembership";
 import ContinueLearningRail from "@/components/home/ContinueLearningRail";
+import UpcomingLiveSessions from '@/components/home/UpcomingLiveSessions';
 
 /* ===== Content from your brief (unchanged) ===== */
 const CORE_FEATURES = [
@@ -320,6 +321,8 @@ export default function Home() {
 
       {/* Continue learning (only when logged in & has items) */}
       {state !== 'GUEST' && <ContinueLearningRail />}
+      <UpcomingLiveSessions limit={6} />
+
 
       {/* TRENDING */}
       {/* <section className="container-app space-y-6">

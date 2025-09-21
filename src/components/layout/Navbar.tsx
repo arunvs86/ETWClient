@@ -541,7 +541,7 @@ export default function Navbar() {
             <span className="hidden sm:block font-semibold whitespace-nowrap truncate max-w-[11rem] md:max-w-none">
               Educate The World
             </span>
-            <span className="sm:hidden font-semibold whitespace-nowrap">ETW</span>
+            <span className="sm:hidden font-semibold whitespace-nowrap">Educate The World</span>
           </Link>
 
           {/* Center: search (desktop) */}
@@ -679,6 +679,14 @@ export default function Navbar() {
                           >
                             <FolderOpen className="h-4 w-4" />
                             <span>Instructor – Resources</span>
+                          </NavLink>
+                          <NavLink
+                            to="/instructor/ebooks"
+                            className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
+                            onClick={() => setProfileOpen(false)}
+                          >
+                            <FolderOpen className="h-4 w-4" />
+                            <span>Instructor – Ebook</span>
                           </NavLink>
                         </>
                       )}

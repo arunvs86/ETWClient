@@ -25,7 +25,9 @@ export default function NewLiveSession() {
   const [minDT, setMinDT] = useState(localDatetimeMin())
   const dropRef = useRef<HTMLDivElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
-
+  const [zoomJoinUrl, setZoomJoinUrl] = useState('');
+  const [zoomPasscode, setZoomPasscode] = useState('');
+  
   useEffect(() => {
     const t = setInterval(() => setMinDT(localDatetimeMin()), 60_000)
     return () => clearInterval(t)
@@ -56,6 +58,17 @@ export default function NewLiveSession() {
   const openFilePicker = () => fileInputRef.current?.click()
   const clearThumbnail = () => setThumbnail('')
 
+  function looksLikeZoomUrl(u: string) {
+    try {
+      const url = new URL(u);
+      const h = url.host.toLowerCase();
+      return /^https:$/i.test(url.protocol) &&
+        (h === 'zoom.us' || h.endsWith('.zoom.us') || h === 'app.zoom.us');
+    } catch {
+      return false;
+    }
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErr(null)
@@ -69,6 +82,11 @@ export default function NewLiveSession() {
     if (end <= start) { setErr('End must be after Start'); return }
     if (pricingType === 'paid' && (!amountMajor || Number(amountMajor) <= 0)) { setErr('Enter a price'); return }
 
+    if (zoomJoinUrl && !looksLikeZoomUrl(zoomJoinUrl)) {
+      setErr('Please paste a valid https Zoom link (zoom.us).');
+      return;
+    }
+    
     setLoading(true)
     try {
       const amountMinor = pricingType === 'paid' ? Math.round(Number(amountMajor) * 100) : 0
@@ -81,7 +99,11 @@ export default function NewLiveSession() {
         membersAccess,
         visibility: 'public',
         thumbnail: thumbnail.trim() || undefined,
-      })
+        // ↓ NEW
+        zoom: (zoomJoinUrl || zoomPasscode)
+          ? { joinUrl: zoomJoinUrl.trim() || undefined, passcode: zoomPasscode.trim() || undefined }
+          : undefined,
+      });
       nav(`/live/${s.id}`)
     } catch (e: any) {
       setErr(e?.response?.data?.error || 'Failed to create session')
@@ -151,6 +173,35 @@ export default function NewLiveSession() {
               />
             </label>
           </div>
+
+          <div className="grid gap-3">
+  <div className="text-sm font-medium">Zoom (optional)</div>
+
+  <label className="text-sm">Zoom meeting link
+    <input
+      type="url"
+      inputMode="url"
+      className="mt-1 w-full h-10 rounded-md border px-3"
+      placeholder="https://us02web.zoom.us/j/XXXXXXXXXX?pwd=..."
+      value={zoomJoinUrl}
+      onChange={e=>setZoomJoinUrl(e.target.value)}
+    />
+  </label>
+
+  <label className="text-sm">Passcode (optional)
+    <input
+      className="mt-1 w-full h-10 rounded-md border px-3"
+      placeholder="e.g., 123456"
+      value={zoomPasscode}
+      onChange={e=>setZoomPasscode(e.target.value)}
+    />
+  </label>
+
+  <p className="text-[11px] text-gray-500">
+    We’ll only share this link with entitled users and within the join window.
+  </p>
+</div>
+
 
           <div className="grid gap-3 sm:grid-cols-3">
             <label className="text-sm">Amount (major)

@@ -7,4 +7,6 @@ export const NAV_AUTH = [
   { to: "/discussions", label: "Discussions" },
   { to: "/live", label: "Live Sessions" },
   { to: "/resources", label: "Resources" },
+  { to: "/ebooks", label: "Ebooks" },
+  
 ];

@@ -251,6 +251,12 @@ import TutorSessionsPage from '@/pages/me/TutorSessionsPage';
 import TutorProfileEditorPage from '@/pages/me/TutorProfileEditorPage';
 import TutorAvailabilityEditorPage from '@/pages/me/TutorAvailabilityEditorPage';
 
+import EbooksList from '@/pages/ebooks/EbooksList'
+import EbookPublic from '@/pages/ebooks/EbookPublic'
+
+import MyEbooksPage from '@/pages/instructor/ebooks/MyEbooksPage'
+import EbookUpsertPage from '@/pages/instructor/ebooks/EbookUpsertPage'
+
 export default function App() {
   useEffect(() => {
     (async () => {
@@ -301,7 +307,7 @@ export default function App() {
               {/* ===== TUTORS PUBLIC (MAKE VISIBLE) ===== */}
               <Route path="/tutors" element={<TutorsListPage />} />
               <Route path="/tutors/:tutorId" element={<TutorDetailPage />} />
-              <Route path="/tutors/booking/success" element={<BookingSuccessPage />} />
+              <Route path="/tutors/booking-success" element={<BookingSuccessPage />} />
 
               {/* ===== Protected routes ===== */}
               <Route element={<RequireAuth />}>
@@ -344,6 +350,12 @@ export default function App() {
                 <Route path="/instructor/resources/new" element={<ResourceUpsertPage />} />
                 <Route path="/instructor/resources/:id" element={<ResourceUpsertPage />} />
 
+                <Route path="/ebooks" element={<EbooksList />} />
+                <Route path="/ebooks/:slug" element={<EbookPublic />} />  
+
+                <Route path="/instructor/ebooks" element={<MyEbooksPage />} />
+                <Route path="/instructor/ebooks/new" element={<EbookUpsertPage />} />
+                <Route path="/instructor/ebooks/:id" element={<EbookUpsertPage />} />
                 {/* ===== TUTORS DASHBOARDS (protected) ===== */}
                 <Route path="/me/sessions" element={<MySessionsPage />} />
                 <Route path="/me/tutor/sessions" element={<TutorSessionsPage />} />
