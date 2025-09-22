@@ -1,5 +1,6 @@
 // src/lib/liveSessions.api.ts
-import { api } from '@/lib/api';
+import { api,apiPublic } from '@/lib/api';
+import axios from "axios";
 
 export type Currency = 'GBP' | 'USD' | 'EUR';
 export type MembersAccess = 'free' | 'paid' | 'none';
@@ -76,7 +77,7 @@ export async function listLiveSessions(params: {
   limit?: number;
   visibility?: 'public' | 'course';
 }) {
-  const { data } = await api.get<ListResponse>('/live-sessions', { params });
+  const { data } = await apiPublic.get<ListResponse>("/live-sessions", { params });
   const results = (data.results || []).map((s: any) => ({ ...s, id: s.id ?? s._id }));
   return { ...data, results };
 }

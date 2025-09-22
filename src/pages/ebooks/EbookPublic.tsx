@@ -115,10 +115,10 @@ export default function EbookPublic() {
 
         {/* Contents */}
         <div className="rounded-md border bg-white p-4 sm:p-5">
-          <div className="mb-2 flex items-center justify-between">
+          {/* <div className="mb-2 flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-900">Contents</h3>
             <span className="text-xs text-gray-500">{items.length} item{items.length === 1 ? '' : 's'}</span>
-          </div>
+          </div> */}
 
           {showItems ? (
             items.length > 0 ? (
@@ -151,7 +151,7 @@ export default function EbookPublic() {
             )
           ) : (
             <div className="text-sm text-gray-700">
-              Purchase to unlock all ebook files and links.
+              Purchase to unlock the ebook.
             </div>
           )}
         </div>

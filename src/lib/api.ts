@@ -6,6 +6,10 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+export const apiPublic = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:4000",
+  withCredentials: false,
+});
 
 // ---- token manager
 const ACCESS_TOKEN_KEY = 'at';
