@@ -149,23 +149,37 @@ api.interceptors.request.use((cfg) => {
 /** ---------- Refresh logic (single-flight) ---------- */
 let refreshPromise: Promise<string | null> | null = null;
 
+// export async function refreshAccessToken(): Promise<string | null> {
+//   try {
+//     const { data } = await axios.post(
+//       `${api.defaults.baseURL}/auth/refresh`,
+//       {},
+//       { withCredentials: true }
+//     );
+//     const newAT: string | undefined =
+//       data?.accessToken || data?.token || data?.access_token;
+//     if (newAT) {
+//       setAccessToken(newAT);
+//       return newAT;
+//     }
+//     setAccessToken(null);
+//     return null;
+//   } catch {
+//     setAccessToken(null);
+//     return null;
+//   }
+// }
+
 export async function refreshAccessToken(): Promise<string | null> {
   try {
-    const { data } = await axios.post(
-      `${api.defaults.baseURL}/auth/refresh`,
-      {},
-      { withCredentials: true }
-    );
-    const newAT: string | undefined =
-      data?.accessToken || data?.token || data?.access_token;
-    if (newAT) {
-      setAccessToken(newAT);
-      return newAT;
-    }
-    setAccessToken(null);
-    return null;
+    const { data } = await axios.post(`${api.defaults.baseURL}/auth/refresh`, {}, { withCredentials: true });
+    const newAT = data?.accessToken || data?.token || data?.access_token;
+    if (newAT) { setAccessToken(newAT); return newAT; }
+    setAccessToken(null); return null;
   } catch {
-    setAccessToken(null);
+    const returnTo = window.location.origin + window.location.pathname + window.location.search;
+    const url = `${api.defaults.baseURL}/auth/refresh-redirect?redirect=${encodeURIComponent(returnTo)}`;
+    window.location.assign(url); // top-level nav; cookie becomes first-party
     return null;
   }
 }

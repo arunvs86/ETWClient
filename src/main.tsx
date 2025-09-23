@@ -5,10 +5,20 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App'
 import './index.css'
 import "@/styles/clamp.css";
+import { handleLoginSuccessToken } from '@/lib/api'   // <-- where this is exported in your project
 
 const qc = new QueryClient()
 
 import { AuthProvider } from './context/AuthProvider'
+
+;(function bootstrapAccessTokenFromHash() {
+  const m = window.location.hash.match(/accessToken=([^&]+)/)
+  if (m) {
+    const token = decodeURIComponent(m[1])
+    if (token) handleLoginSuccessToken(token)
+    history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
+})()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
