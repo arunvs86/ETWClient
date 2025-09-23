@@ -11,15 +11,6 @@ const qc = new QueryClient()
 
 import { AuthProvider } from './context/AuthProvider'
 
-// ;(function bootstrapAccessTokenFromHash() {
-//   const m = window.location.hash.match(/accessToken=([^&]+)/)
-//   if (m) {
-//     const token = decodeURIComponent(m[1])
-//     if (token) handleLoginSuccessToken(token)
-//     history.replaceState(null, '', window.location.pathname + window.location.search)
-//   }
-// })()
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={qc}>
