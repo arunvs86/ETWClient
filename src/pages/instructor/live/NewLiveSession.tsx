@@ -72,7 +72,7 @@ export default function NewLiveSession() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErr(null)
-
+    console.log("title", title)
     if (!title.trim()) { setErr('Title is required'); return }
     if (!startAt || !endAt) { setErr('Start and End are required'); return }
     const now = new Date()

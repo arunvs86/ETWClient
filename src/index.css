@@ -24,7 +24,6 @@
 @utility container-app { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
 @layer components { .card { @apply bg-surface border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-card)]; } }
 
-/* smooth, neat horizontal sizing */
 .card-shell { min-width: 78vw; max-width: 82vw; }
 @media (min-width: 420px) { .card-shell { min-width: 320px; max-width: 360px; } }
 @media (min-width: 640px) { .card-shell { min-width: 340px; max-width: 380px; } }
@@ -32,12 +31,10 @@
 @media (min-width: 1024px){ .card-shell { min-width: 380px; max-width: 440px; } }
 @media (min-width: 1280px){ .card-shell { min-width: 400px; max-width: 460px; } }
 
-/* edge fades */
 .edge-fade {
   position: absolute; top: 0; bottom: 0; width: 56px; pointer-events: none; transition: opacity .2s ease;
 }
 
-/* arrows */
 .arrow-btn {
   position: absolute; top: 50%; transform: translateY(-50%);
   z-index: 10; height: 38px; width: 38px; display: grid; place-items: center;

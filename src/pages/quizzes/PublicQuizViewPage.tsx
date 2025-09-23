@@ -320,6 +320,7 @@ export default function PublicQuizViewPage() {
       ? 'Included in Membership'
       : `${(pricing.amountMinor / 100).toFixed(2)} ${pricing.currency}`
 
+  
   async function startOrCheckout() {
     if (!q) return
     if (q.visibility === 'enrolled' && !user) {

@@ -1,452 +1,5 @@
-// // import { useMemo, useState } from 'react';
-// // import { Link, NavLink, useNavigate } from 'react-router-dom';
-// // import Button from '../ui/Button';
-// // import { useAuth } from '../../context/AuthProvider';
-// // import { useMembership } from '../../hooks/useMembership';
-// // import { NAV_PUBLIC, NAV_AUTH } from '../../config/nav';
-
-// // function initials(name?: string) {
-// //   if (!name) return 'U';
-// //   const p = name.trim().split(' ');
-// //   return (p[0]?.[0] || '').toUpperCase() + (p[1]?.[0] || '').toUpperCase();
-// // }
-
-// // const Icon = {
-// //   search: (
-// //     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-// //       <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
-// //       <path d="M20 20l-3.2-3.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-// //     </svg>
-// //   ),
-// //   close: (
-// //     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-// //       <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-// //     </svg>
-// //   ),
-// //   menu: (
-// //     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-// //       <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-// //     </svg>
-// //   ),
-// // };
-
-// // const ActivePill = () => (
-// //   <span className="ml-1 inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
-// //     Active
-// //   </span>
-// // );
-
-// // export default function Navbar() {
-// //   const { user, logout } = useAuth();
-// //   const { isActive, isLoading: memLoading } = useMembership();
-// //   const isAuthed = !!user;
-
-// //   const navigate = useNavigate();
-// //   const [q, setQ] = useState('');
-// //   const [profileOpen, setProfileOpen] = useState(false);
-// //   const [drawerOpen, setDrawerOpen] = useState(false);
-// //   const [searchOpen, setSearchOpen] = useState(false);
-
-// //   const avatarHue = useMemo(() => (user ? ((user.name || 'U').length * 23) % 360 : 200), [user]);
-// //   const canTeach = user?.role === 'instructor' || user?.role === 'admin';
-
-// //   const submitSearch = (e: React.FormEvent) => {
-// //     e.preventDefault();
-// //     const term = q.trim();
-// //     navigate(term ? `/courses?q=${encodeURIComponent(term)}` : '/courses');
-// //     setSearchOpen(false);
-// //     setDrawerOpen(false);
-// //   };
-
-// //   const navClass = ({ isActive: isHere }: { isActive: boolean }) =>
-// //     isHere
-// //       ? 'px-3 py-2 rounded-md text-sm font-medium text-primary'
-// //       : 'px-3 py-2 rounded-md text-sm font-medium hover:text-primary';
-
-// //   const membershipLabel = !isAuthed
-// //     ? 'Membership'
-// //     : memLoading
-// //     ? 'Membership'
-// //     : isActive
-// //     ? (
-// //       <span className="inline-flex items-center">
-// //         Membership <ActivePill />
-// //       </span>
-// //     )
-// //     : 'Get Lifetime';
-
-// //   return (
-// //     <>
-// //       {/* ONE SOLID BAR */}
-// //       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-// //         <div className="container-app h-16 flex items-center gap-3">
-// //           {/* Left: brand */}
-// //           <Link to="/" className="flex items-center gap-2 min-w-0">
-// //             <img src="/images/logo.webp" alt="Educate The World" className="h-8 w-auto" />
-// //             <span className="hidden sm:block font-semibold whitespace-nowrap truncate max-w-[11rem] md:max-w-none">
-// //               Educate The World
-// //             </span>
-// //             <span className="sm:hidden font-semibold whitespace-nowrap">ETW</span>
-// //           </Link>
-
-// //           {/* Center: search (desktop) */}
-// //           <form
-// //             onSubmit={submitSearch}
-// //             className="hidden md:flex flex-1 items-center gap-2 mx-4 max-w-[640px] rounded-full border bg-white px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-primary/20"
-// //           >
-// //             {Icon.search}
-// //             <input
-// //               value={q}
-// //               onChange={(e) => setQ(e.target.value)}
-// //               placeholder="Search for courses, exams, topics…"
-// //               className="w-full bg-transparent outline-none text-sm"
-// //             />
-// //             <Button className="rounded-full" variant="secondary" size="sm" type="submit">
-// //               Search
-// //             </Button>
-// //           </form>
-
-// //           {/* Right: desktop nav (public + auth-aware) */}
-// //           <div className="ml-auto hidden md:flex items-center gap-1">
-// //             {/* NEW: Tutors (public) */}
-// //             <NavLink to="/tutors" className={navClass}>
-// //               Tutors
-// //             </NavLink>
-
-// //             {isAuthed ? (
-// //               <>
-// //                 <NavLink to="/billing/plans" className={navClass}>
-// //                   {membershipLabel}
-// //                 </NavLink>
-
-// //                 {NAV_AUTH.map((item) => (
-// //                   <NavLink key={item.to} to={item.to} className={navClass}>
-// //                     {item.label}
-// //                   </NavLink>
-// //                 ))}
-
-// //                 {/* Profile dropdown */}
-// //                 <div className="relative">
-// //                   <button
-// //                     onClick={() => setProfileOpen((v) => !v)}
-// //                     aria-expanded={profileOpen}
-// //                     aria-label="Profile menu"
-// //                     className="ml-1 flex h-8 w-8 items-center justify-center rounded-full text-white"
-// //                     style={{ backgroundColor: `hsl(${avatarHue} 70% 45%)` }}
-// //                   >
-// //                     <span className="text-xs font-bold">{initials(user?.name)}</span>
-// //                   </button>
-// //                   {profileOpen && (
-// //                     <div className="absolute right-0 mt-2 w-56 rounded-xl border bg-white p-2 shadow-lg">
-// //                       <div className="px-2 pb-2 text-sm font-medium truncate">{user?.name}</div>
-
-// //                       <NavLink
-// //                         to="/billing/plans"
-// //                         className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                         onClick={() => setProfileOpen(false)}
-// //                       >
-// //                         {membershipLabel}
-// //                       </NavLink>
-
-// //                       {/* NEW: quick links for tutoring */}
-// //                       <NavLink
-// //                         to="/me/sessions"
-// //                         className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                         onClick={() => setProfileOpen(false)}
-// //                       >
-// //                         My Sessions
-// //                       </NavLink>
-// //                       {(user?.role === 'instructor' || user?.role === 'admin') && (
-// //                         <NavLink
-// //                           to="/me/tutor/sessions"
-// //                           className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                           onClick={() => setProfileOpen(false)}
-// //                         >
-// //                           Tutor – Sessions
-// //                         </NavLink>
-// //                       )}
-
-// //                       <NavLink
-// //                         to="/me"
-// //                         className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                         onClick={() => setProfileOpen(false)}
-// //                       >
-// //                         Profile
-// //                       </NavLink>
-
-// //                       {(user?.role === 'instructor' || user?.role === 'admin') && (
-// //                         <>
-// //                           <NavLink
-// //                             to="/instructor/courses"
-// //                             className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                             onClick={() => setProfileOpen(false)}
-// //                           >
-// //                             Instructor – Courses
-// //                           </NavLink>
-// //                           <NavLink
-// //                             to="/instructor/quizzes"
-// //                             className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                             onClick={() => setProfileOpen(false)}
-// //                           >
-// //                             Instructor – Quizzes
-// //                           </NavLink>
-// //                           <NavLink
-// //                             to="/instructor/live"
-// //                             className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                             onClick={() => setProfileOpen(false)}
-// //                           >
-// //                             Instructor – Live Sessions
-// //                           </NavLink>
-// //                           <NavLink
-// //                             to="/instructor/resources"
-// //                             className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                             onClick={() => setProfileOpen(false)}
-// //                           >
-// //                             Instructor – Resources
-// //                           </NavLink>
-// //                           <NavLink
-// //       to="/me/tutor/profile"
-// //       className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //       onClick={() => setProfileOpen(false)}
-// //     >
-// //       Tutor – Profile
-// //     </NavLink>
-// //     <NavLink
-// //       to="/me/tutor/availability"
-// //       className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //       onClick={() => setProfileOpen(false)}
-// //     >
-// //       Tutor – Availability
-// //     </NavLink>
-// //                         </>
-// //                       )}
-
-// //                       {user?.role === 'admin' && (
-// //                         <NavLink
-// //                           to="/admin"
-// //                           className="block rounded-md px-2 py-1.5 text-sm hover:bg-gray-50"
-// //                           onClick={() => setProfileOpen(false)}
-// //                         >
-// //                           Admin
-// //                         </NavLink>
-// //                       )}
-
-// //                       <button
-// //                         onClick={() => {
-// //                           logout();
-// //                           setProfileOpen(false);
-// //                         }}
-// //                         className="mt-1 w-full rounded-md px-2 py-1.5 text-left text-sm hover:bg-gray-50"
-// //                       >
-// //                         Logout
-// //                       </button>
-// //                     </div>
-// //                   )}
-// //                 </div>
-// //               </>
-// //             ) : (
-// //               // Signed-out: public nav
-// //               <>
-// //                 <NavLink to="/billing/plans" className={navClass}>
-// //                   {membershipLabel}
-// //                 </NavLink>
-// //                 {NAV_PUBLIC.map((item) => (
-// //                   <NavLink key={item.to} to={item.to} className={navClass}>
-// //                     {item.label}
-// //                   </NavLink>
-// //                 ))}
-// //                 <div className="flex items-center gap-2 pl-1">
-// //                   <Link to="/login">
-// //                     <Button variant="ghost">Log in</Button>
-// //                   </Link>
-// //                   <Link to="/register">
-// //                     <Button>Sign up</Button>
-// //                   </Link>
-// //                 </div>
-// //               </>
-// //             )}
-// //           </div>
-
-// //           {/* Mobile: search + menu buttons */}
-// //           <div className="md:hidden ml-auto flex items-center gap-1">
-// //             <button className="p-2 rounded hover:bg-primary/10" aria-label="Search" onClick={() => setSearchOpen(true)}>
-// //               {Icon.search}
-// //             </button>
-// //             <button className="p-2 rounded hover:bg-primary/10" aria-label="Menu" onClick={() => setDrawerOpen(true)}>
-// //               {Icon.menu}
-// //             </button>
-// //           </div>
-// //         </div>
-// //       </header>
-
-// //       {/* ===== Overlays ===== */}
-
-// //       {/* Mobile search overlay */}
-// //       {searchOpen && (
-// //         <div className="fixed inset-0 z-[60] bg-black/30" onClick={() => setSearchOpen(false)}>
-// //           <div className="absolute left-0 right-0 top-0 bg-white border-b" onClick={(e) => e.stopPropagation()}>
-// //             <div className="container-app py-3">
-// //               <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border bg-white px-4 py-2 shadow-sm">
-// //                 <button type="button" className="p-2 rounded hover:bg-gray-100" aria-label="Close" onClick={() => setSearchOpen(false)}>
-// //                   {Icon.close}
-// //                 </button>
-// //                 {Icon.search}
-// //                 <input
-// //                   autoFocus
-// //                   value={q}
-// //                   onChange={(e) => setQ(e.target.value)}
-// //                   placeholder="Search courses…"
-// //                   className="w-full bg-transparent outline-none text-sm"
-// //                 />
-// //                 <Button className="rounded-full" variant="secondary" size="sm" type="submit">
-// //                   Search
-// //                 </Button>
-// //               </form>
-// //             </div>
-// //           </div>
-// //         </div>
-// //       )}
-
-// //       {/* Mobile drawer (auth-aware) */}
-// //       {drawerOpen && (
-// //         <div className="fixed inset-0 z-[60] bg-black/30" onClick={() => setDrawerOpen(false)}>
-// //           <div className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-white shadow-xl p-4" onClick={(e) => e.stopPropagation()}>
-// //             <div className="flex items-center justify-between">
-// //               <div className="font-semibold">Menu</div>
-// //               <button className="p-2 rounded hover:bg-gray-100" aria-label="Close" onClick={() => setDrawerOpen(false)}>
-// //                 {Icon.close}
-// //               </button>
-// //             </div>
-
-// //             <div className="mt-4 grid gap-2">
-// //               {/* NEW: Tutors visible to everyone on mobile */}
-// //               <NavLink
-// //                 to="/tutors"
-// //                 className="rounded-lg border px-3 py-2 text-sm"
-// //                 onClick={() => setDrawerOpen(false)}
-// //               >
-// //                 Tutors
-// //               </NavLink>
-
-// //               {isAuthed ? (
-// //                 <>
-// //                   <NavLink
-// //                     to="/billing/plans"
-// //                     className="rounded-lg border px-3 py-2 text-sm"
-// //                     onClick={() => setDrawerOpen(false)}
-// //                   >
-// //                     {membershipLabel}
-// //                   </NavLink>
-
-// //                   {NAV_AUTH.map((item) => (
-// //                     <NavLink
-// //                       key={item.to}
-// //                       to={item.to}
-// //                       className="rounded-lg border px-3 py-2 text-sm"
-// //                       onClick={() => setDrawerOpen(false)}
-// //                     >
-// //                       {item.label}
-// //                     </NavLink>
-// //                   ))}
-
-// //                   {/* Quick access tutoring */}
-// //                   <NavLink
-// //                     to="/me/sessions"
-// //                     className="rounded-lg border px-3 py-2 text-sm"
-// //                     onClick={() => setDrawerOpen(false)}
-// //                   >
-// //                     My Sessions
-// //                   </NavLink>
-// //                   {(user?.role === 'instructor' || user?.role === 'admin') && (
-// //                     <>
-// //                     <NavLink
-// //                       to="/me/tutor/sessions"
-// //                       className="rounded-lg border px-3 py-2 text-sm"
-// //                       onClick={() => setDrawerOpen(false)}
-// //                     >
-// //                       Tutor – Sessions
-// //                     </NavLink>
-                    
-// //                     <NavLink to="/me/tutor/profile"
-// //                     className="rounded-lg border px-3 py-2 text-sm"
-// //                     onClick={() => setDrawerOpen(false)}>
-// //                     Tutor – Profile
-// //                     </NavLink>
-
-// //                     <NavLink
-// //                       to="/me/tutor/availability"
-// //                       className="rounded-lg border px-3 py-2 text-sm"
-// //                       onClick={() => setDrawerOpen(false)}
-// //                     >
-// //                       Tutor – Availability
-// //                     </NavLink>
-// //                   </>
-
-// //                   )}
-
-// //                   {(user?.role === 'admin') && (
-// //                     <NavLink
-// //                       to="/admin"
-// //                       className="rounded-lg border px-3 py-2 text-sm"
-// //                       onClick={() => setDrawerOpen(false)}
-// //                     >
-// //                       Admin
-// //                     </NavLink>
-// //                   )}
-
-// //                   <button
-// //                     onClick={() => {
-// //                       logout();
-// //                       setDrawerOpen(false);
-// //                     }}
-// //                     className="rounded-lg border px-3 py-2 text-left text-sm"
-// //                   >
-// //                     Logout
-// //                   </button>
-// //                 </>
-// //               ) : (
-// //                 <>
-// //                   <NavLink
-// //                     to="/billing/plans"
-// //                     className="rounded-lg border px-3 py-2 text-sm"
-// //                     onClick={() => setDrawerOpen(false)}
-// //                   >
-// //                     {membershipLabel}
-// //                   </NavLink>
-
-// //                   {NAV_PUBLIC.map((item) => (
-// //                     <NavLink
-// //                       key={item.to}
-// //                       to={item.to}
-// //                       className="rounded-lg border px-3 py-2 text-sm"
-// //                       onClick={() => setDrawerOpen(false)}
-// //                     >
-// //                       {item.label}
-// //                     </NavLink>
-// //                   ))}
-// //                   <div className="grid grid-cols-2 gap-2 pt-1">
-// //                     <Link to="/login" onClick={() => setDrawerOpen(false)}>
-// //                       <Button variant="ghost" full>
-// //                         Log in
-// //                       </Button>
-// //                     </Link>
-// //                     <Link to="/register" onClick={() => setDrawerOpen(false)}>
-// //                       <Button full>Sign up</Button>
-// //                     </Link>
-// //                   </div>
-// //                 </>
-// //               )}
-// //             </div>
-// //           </div>
-// //         </div>
-// //       )}
-// //     </>
-// //   );
-// // }
-
-
-// import { useMemo, useState } from 'react';
-// import { Link, NavLink, useNavigate } from 'react-router-dom';
+// import { useEffect, useMemo, useRef, useState } from 'react';
+// import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 // import Button from '../ui/Button';
 // import { useAuth } from '../../context/AuthProvider';
 // import { useMembership } from '../../hooks/useMembership';
@@ -457,19 +10,16 @@
 //   User as UserIcon, LogOut as LogOutIcon, Settings, GraduationCap, CalendarClock, Library
 // } from 'lucide-react';
 
+// /* ---------------- utils ---------------- */
+
+// const MEMBERSHIP_PATH = '/billing/plans';
+
 // function initials(name?: string) {
 //   if (!name) return 'U';
-//   const p = name.trim().split(' ');
+//   const p = name.trim().split(/\s+/);
 //   return (p[0]?.[0] || '').toUpperCase() + (p[1]?.[0] || '').toUpperCase();
 // }
 
-// const ActivePill = () => (
-//   <span className="ml-1 inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
-//     Active
-//   </span>
-// );
-
-// // Small helper to render an icon next to a label
 // const withIcon = (IconCmp: any, label: string) => (
 //   <span className="inline-flex items-center gap-1.5">
 //     <IconCmp className="h-4 w-4" aria-hidden />
@@ -477,7 +27,6 @@
 //   </span>
 // );
 
-// // Optional map for your NAV_* items if you want per-route icons
 // const labelIconFor = (label: string) => {
 //   const L = label.toLowerCase();
 //   if (L.includes('course')) return BookOpen;
@@ -489,19 +38,87 @@
 //   return Library;
 // };
 
+// function useOutside(ref: React.RefObject<HTMLElement>, onClose: () => void) {
+//   useEffect(() => {
+//     const handler = (e: MouseEvent | TouchEvent) => {
+//       const el = ref.current;
+//       if (!el) return;
+//       if (e.target instanceof Node && el.contains(e.target)) return;
+//       onClose();
+//     };
+//     document.addEventListener('mousedown', handler);
+//     document.addEventListener('touchstart', handler, { passive: true });
+//     return () => {
+//       document.removeEventListener('mousedown', handler);
+//       document.removeEventListener('touchstart', handler);
+//     };
+//   }, [ref, onClose]);
+// }
+// function useEsc(onClose: () => void) {
+//   useEffect(() => {
+//     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+//     document.addEventListener('keydown', handler);
+//     return () => document.removeEventListener('keydown', handler);
+//   }, [onClose]);
+// }
+// function useScrollLock(locked: boolean) {
+//   useEffect(() => {
+//     if (!locked) return;
+//     const prev = document.body.style.overflow;
+//     document.body.style.overflow = 'hidden';
+//     return () => { document.body.style.overflow = prev; };
+//   }, [locked]);
+// }
+
+// /* ---------------- component ---------------- */
+
 // export default function Navbar() {
 //   const { user, logout } = useAuth();
 //   const { isActive, isLoading: memLoading } = useMembership();
 //   const isAuthed = !!user;
+//   const canTeach = user?.role === 'instructor' || user?.role === 'admin';
+
+//   // prevent duplicate "Membership" on logged-out:
+//   const navPublicClean = useMemo(
+//     () => NAV_PUBLIC.filter(item => item.to !== MEMBERSHIP_PATH),
+//     []
+//   );
 
 //   const navigate = useNavigate();
+//   const location = useLocation();
+
 //   const [q, setQ] = useState('');
 //   const [profileOpen, setProfileOpen] = useState(false);
 //   const [drawerOpen, setDrawerOpen] = useState(false);
 //   const [searchOpen, setSearchOpen] = useState(false);
 
+//   const profileRef = useRef<HTMLDivElement>(null);
+//   const searchInputRef = useRef<HTMLInputElement>(null);
+
 //   const avatarHue = useMemo(() => (user ? ((user.name || 'U').length * 23) % 360 : 200), [user]);
-//   const canTeach = user?.role === 'instructor' || user?.role === 'admin';
+
+//   // close overlays on route change
+//   useEffect(() => {
+//     setProfileOpen(false);
+//     setDrawerOpen(false);
+//     setSearchOpen(false);
+//   }, [location.pathname, location.search]);
+
+//   // a11y helpers
+//   useOutside(profileRef, () => setProfileOpen(false));
+//   useEsc(() => {
+//     if (profileOpen) setProfileOpen(false);
+//     if (drawerOpen) setDrawerOpen(false);
+//     if (searchOpen) setSearchOpen(false);
+//   });
+//   useScrollLock(drawerOpen || searchOpen);
+
+//   useEffect(() => {
+//     if (searchOpen) {
+//       const t = setTimeout(() => searchInputRef.current?.focus(), 0);
+//       return () => clearTimeout(t);
+//     }
+//   }, [searchOpen]);
 
 //   const submitSearch = (e: React.FormEvent) => {
 //     e.preventDefault();
@@ -511,9 +128,8 @@
 //     setDrawerOpen(false);
 //   };
 
-
 //   const navClass = ({ isActive: isHere }: { isActive: boolean }) =>
-//     `px-3 py-2 rounded-md text-sm font-medium transition-colors
+//     `px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap
 //      ${isHere ? 'text-primary underline underline-offset-[10px] decoration-2' : 'text-gray-700 hover:text-primary'}`;
 
 //   const membershipLabel = !isAuthed
@@ -525,52 +141,35 @@
 //       <span className="inline-flex items-center gap-1.5">
 //         <BadgeCheck className="h-4 w-4" />
 //         <span>Membership</span>
-//         <ActivePill />
+//         <span className="ml-1 inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
+//           Active
+//         </span>
 //       </span>
 //     )
 //     : withIcon(Crown, 'Get Lifetime');
 
 //   return (
 //     <>
-//       {/* ONE SOLID BAR */}
-//       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b shadow-[0_1px_0_rgba(0,0,0,0.04)]">
+//       <header className="sticky top-0 z-[70] bg-white/90 backdrop-blur border-b shadow-[0_1px_0_rgba(0,0,0,0.04)]">
 //         <div className="container-app h-16 flex items-center gap-3 px-4 sm:px-6 lg:px-8">
-//           {/* Left: brand */}
+//           {/* Brand */}
 //           <Link to="/" className="flex items-center gap-2 min-w-0">
-//             <img src="/images/logo.webp" alt="Educate The World" className="h-8 w-auto" />
-//             <span className="hidden sm:block font-semibold whitespace-nowrap truncate max-w-[11rem] md:max-w-none">
+//             <img src="/images/logo.webp" alt="Educate The World" className="h-8 w-auto shrink-0" />
+//             <span className="hidden sm:block font-semibold truncate max-w-[11rem] md:max-w-none">
 //               Educate The World
 //             </span>
-//             <span className="sm:hidden font-semibold whitespace-nowrap">Educate The World</span>
+//             <span className="sm:hidden font-semibold">ETW</span>
 //           </Link>
 
-//           {/* Center: search (desktop) */}
-//           {/* <form
-//             onSubmit={submitSearch}
-//             className="hidden md:flex flex-1 items-center gap-2 mx-4 max-w-[640px] rounded-full border border-gray-200 bg-white px-3 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-primary/20"
-//           >
-//             <Search className="h-4 w-4 text-gray-500" aria-hidden />
-//             <input
-//               value={q}
-//               onChange={(e) => setQ(e.target.value)}
-//               placeholder="Search for courses, exams, topics…"
-//               className="w-full bg-transparent outline-none text-sm placeholder:text-gray-400"
-//             />
-//             <Button className="rounded-full" variant="secondary" size="sm" type="submit">
-//               Search
-//             </Button>
-//           </form> */}
-
-//           {/* Right: desktop nav (public + auth-aware) */}
-//           <div className="ml-auto hidden md:flex items-center gap-1">
-//             {/* Tutors (public) */}
-//             <NavLink to="/tutors" className={navClass}>
+//           {/* Desktop nav */}
+//           <nav aria-label="Primary" className="ml-auto hidden md:flex items-center gap-1">
+//           <NavLink to="/tutors" className={navClass}>
 //               {withIcon(Users, 'Tutors')}
 //             </NavLink>
 
 //             {isAuthed ? (
 //               <>
-//                 <NavLink to="/billing/plans" className={navClass}>
+//                 <NavLink to={MEMBERSHIP_PATH} className={navClass}>
 //                   {membershipLabel}
 //                 </NavLink>
 
@@ -583,37 +182,47 @@
 //                   );
 //                 })}
 
-//                 {/* Profile dropdown */}
-//                 <div className="relative">
+//                 {/* Profile */}
+//                 <div className="relative" ref={profileRef}>
 //                   <button
-//                     onClick={() => setProfileOpen((v) => !v)}
+//                     onClick={() => setProfileOpen(v => !v)}
+//                     aria-label="Open profile menu"
+//                     aria-haspopup="menu"
 //                     aria-expanded={profileOpen}
-//                     aria-label="Profile menu"
 //                     className="ml-1 flex h-9 w-9 items-center justify-center rounded-full text-white ring-1 ring-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
 //                     style={{ backgroundColor: `hsl(${avatarHue} 70% 45%)` }}
 //                   >
 //                     <span className="text-xs font-bold">{initials(user?.name)}</span>
 //                   </button>
+
 //                   {profileOpen && (
-//                     <div className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-100 bg-white p-2 shadow-lg">
+//                     <div
+//                       role="menu"
+//                       className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-100 bg-white p-2 shadow-lg z-[75]"
+//                     >
 //                       <div className="px-2 pb-2 text-sm font-medium truncate flex items-center gap-2">
 //                         <UserIcon className="h-4 w-4 text-gray-500" />
 //                         <span>{user?.name}</span>
 //                       </div>
 
 //                       <NavLink
-//                         to="/billing/plans"
+//                         to={MEMBERSHIP_PATH}
+//                         role="menuitem"
 //                         className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
 //                         onClick={() => setProfileOpen(false)}
 //                       >
 //                         <BadgeCheck className="h-4 w-4" />
 //                         <span className="truncate">Membership</span>
-//                         {!memLoading && isActive && <ActivePill />}
+//                         {!memLoading && isActive && (
+//                           <span className="ml-auto inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
+//                             Active
+//                           </span>
+//                         )}
 //                       </NavLink>
 
-//                       {/* quick links */}
 //                       <NavLink
 //                         to="/me/sessions"
+//                         role="menuitem"
 //                         className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
 //                         onClick={() => setProfileOpen(false)}
 //                       >
@@ -623,91 +232,40 @@
 
 //                       {canTeach && (
 //                         <>
-//                           <NavLink
-//                             to="/me/tutor/sessions"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <Users className="h-4 w-4" />
-//                             <span>Tutor – Sessions</span>
+//                           <NavLink to="/me/tutor/sessions" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <Users className="h-4 w-4" /><span>Tutor – Sessions</span>
 //                           </NavLink>
-//                           <NavLink
-//                             to="/me/tutor/profile"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <Settings className="h-4 w-4" />
-//                             <span>Tutor – Profile</span>
+//                           <NavLink to="/me/tutor/profile" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <Settings className="h-4 w-4" /><span>Tutor – Profile</span>
 //                           </NavLink>
-//                           <NavLink
-//                             to="/me/tutor/availability"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <CalendarClock className="h-4 w-4" />
-//                             <span>Tutor – Availability</span>
+//                           <NavLink to="/me/tutor/availability" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <CalendarClock className="h-4 w-4" /><span>Tutor – Availability</span>
 //                           </NavLink>
-
-//                           {/* <NavLink
-//                             to="/instructor/courses"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <BookOpen className="h-4 w-4" />
-//                             <span>Instructor – Courses</span>
-//                           </NavLink> */}
-//                           <NavLink
-//                             to="/instructor/quizzes"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <GraduationCap className="h-4 w-4" />
-//                             <span>Instructor – Quizzes</span>
+//                           <NavLink to="/instructor/quizzes" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <GraduationCap className="h-4 w-4" /><span>Instructor – Quizzes</span>
 //                           </NavLink>
-//                           <NavLink
-//                             to="/instructor/live"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <Video className="h-4 w-4" />
-//                             <span>Instructor – Live Sessions</span>
+//                           <NavLink to="/instructor/live" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <Video className="h-4 w-4" /><span>Instructor – Live Sessions</span>
 //                           </NavLink>
-//                           <NavLink
-//                             to="/instructor/resources"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <FolderOpen className="h-4 w-4" />
-//                             <span>Instructor – Resources</span>
+//                           <NavLink to="/instructor/resources" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <FolderOpen className="h-4 w-4" /><span>Instructor – Resources</span>
 //                           </NavLink>
-//                           <NavLink
-//                             to="/instructor/ebooks"
-//                             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                             onClick={() => setProfileOpen(false)}
-//                           >
-//                             <FolderOpen className="h-4 w-4" />
-//                             <span>Instructor – Ebook</span>
+//                           <NavLink to="/instructor/ebooks" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                             <FolderOpen className="h-4 w-4" /><span>Instructor – Ebook</span>
 //                           </NavLink>
 //                         </>
 //                       )}
 
 //                       {user?.role === 'admin' && (
-//                         <NavLink
-//                           to="/admin"
-//                           className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
-//                           onClick={() => setProfileOpen(false)}
-//                         >
-//                           <Settings className="h-4 w-4" />
-//                           <span>Admin</span>
+//                         <NavLink to="/admin" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+//                           <Settings className="h-4 w-4" /><span>Admin</span>
 //                         </NavLink>
 //                       )}
 
 //                       <button
-//                         onClick={() => {
-//                           logout();
-//                           setProfileOpen(false);
-//                         }}
+//                         onClick={() => { logout(); setProfileOpen(false); }}
 //                         className="mt-1 w-full rounded-md px-2 py-2 text-left text-sm hover:bg-gray-50 inline-flex items-center gap-2"
+//                         role="menuitem"
 //                       >
 //                         <LogOutIcon className="h-4 w-4" />
 //                         <span>Logout</span>
@@ -717,12 +275,13 @@
 //                 </div>
 //               </>
 //             ) : (
-//               // Signed-out: public nav
 //               <>
-//                 <NavLink to="/billing/plans" className={navClass}>
-//                   {membershipLabel}
+//                 {/* show Membership once; NAV_PUBLIC cleaned already */}
+//                 <NavLink to={MEMBERSHIP_PATH} className={navClass}>
+//                   {withIcon(Crown, 'Membership')}
 //                 </NavLink>
-//                 {NAV_PUBLIC.map((item) => {
+
+//                 {navPublicClean.map((item) => {
 //                   const Ico = labelIconFor(item.label);
 //                   return (
 //                     <NavLink key={item.to} to={item.to} className={navClass}>
@@ -730,6 +289,7 @@
 //                     </NavLink>
 //                   );
 //                 })}
+
 //                 <div className="flex items-center gap-2 pl-1">
 //                   <Link to="/login">
 //                     <Button variant="ghost" className="inline-flex items-center gap-1.5">
@@ -746,9 +306,9 @@
 //                 </div>
 //               </>
 //             )}
-//           </div>
+//           </nav>
 
-//           {/* Mobile: search + menu buttons */}
+//           {/* Mobile buttons */}
 //           <div className="md:hidden ml-auto flex items-center gap-1">
 //             <button
 //               className="p-2 rounded hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
@@ -768,25 +328,18 @@
 //         </div>
 //       </header>
 
-//       {/* ===== Overlays ===== */}
-
-//       {/* Mobile search overlay */}
+//       {/* Search overlay (mobile) */}
 //       {searchOpen && (
-//         <div className="fixed inset-0 z-[60] bg-black/30" onClick={() => setSearchOpen(false)}>
+//         <div className="fixed inset-0 z-[80] bg-black/30" onClick={() => setSearchOpen(false)}>
 //           <div className="absolute left-0 right-0 top-0 bg-white border-b rounded-b-2xl shadow-md" onClick={(e) => e.stopPropagation()}>
 //             <div className="container-app py-3 px-4">
 //               <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border px-3 py-2 shadow-sm">
-//                 <button
-//                   type="button"
-//                   className="p-2 rounded hover:bg-gray-100"
-//                   aria-label="Close"
-//                   onClick={() => setSearchOpen(false)}
-//                 >
+//                 <button type="button" className="p-2 rounded hover:bg-gray-100" aria-label="Close" onClick={() => setSearchOpen(false)}>
 //                   <X className="h-4 w-4" />
 //                 </button>
 //                 <Search className="h-4 w-4 text-gray-500" />
 //                 <input
-//                   autoFocus
+//                   ref={searchInputRef}
 //                   value={q}
 //                   onChange={(e) => setQ(e.target.value)}
 //                   placeholder="Search courses…"
@@ -801,12 +354,15 @@
 //         </div>
 //       )}
 
-//       {/* Mobile drawer (auth-aware) */}
+//       {/* Drawer (mobile) */}
 //       {drawerOpen && (
-//         <div className="fixed inset-0 z-[60] bg-black/30" onClick={() => setDrawerOpen(false)}>
+//         <div className="fixed inset-0 z-[80] bg-black/30" onClick={() => setDrawerOpen(false)}>
 //           <div
-//             className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-white shadow-xl p-4 pb-[max(16px,env(safe-area-inset-bottom))] rounded-l-2xl"
+//             className="absolute right-0 top-0 h-full w-[88%] max-w-sm bg-white shadow-xl p-4 pb-[max(16px,env(safe-area-inset-bottom))] rounded-l-2xl flex flex-col"
 //             onClick={(e) => e.stopPropagation()}
+//             role="dialog"
+//             aria-modal="true"
+//             aria-label="Navigation menu"
 //           >
 //             <div className="flex items-center justify-between">
 //               <div className="font-semibold">Menu</div>
@@ -815,7 +371,7 @@
 //               </button>
 //             </div>
 
-//             <div className="mt-4 grid gap-2">
+//             <div className="mt-4 grid gap-2 overflow-y-auto">
 //               <NavLink
 //                 to="/tutors"
 //                 className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
@@ -827,84 +383,65 @@
 
 //               {isAuthed ? (
 //                 <>
-//                   <NavLink
-//                     to="/billing/plans"
-//                     className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                     onClick={() => setDrawerOpen(false)}
-//                   >
+//                   <NavLink to={MEMBERSHIP_PATH} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                     <BadgeCheck className="h-4 w-4" />
-//                     Membership {(!memLoading && isActive) && <ActivePill />}
+//                     Membership {(!memLoading && isActive) && (
+//                       <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
+//                         Active
+//                       </span>
+//                     )}
 //                   </NavLink>
 
 //                   {NAV_AUTH.map((item) => {
 //                     const Ico = labelIconFor(item.label);
 //                     return (
-//                       <NavLink
-//                         key={item.to}
-//                         to={item.to}
-//                         className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                         onClick={() => setDrawerOpen(false)}
-//                       >
+//                       <NavLink key={item.to} to={item.to} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                         <Ico className="h-4 w-4" />
 //                         {item.label}
 //                       </NavLink>
 //                     );
 //                   })}
 
-//                   <NavLink
-//                     to="/me/sessions"
-//                     className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                     onClick={() => setDrawerOpen(false)}
-//                   >
+//                   <NavLink to="/me/sessions" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                     <CalendarClock className="h-4 w-4" />
 //                     My Sessions
 //                   </NavLink>
 
 //                   {canTeach && (
 //                     <>
-//                       <NavLink
-//                         to="/me/tutor/sessions"
-//                         className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                         onClick={() => setDrawerOpen(false)}
-//                       >
+//                       <NavLink to="/me/tutor/sessions" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                         <Users className="h-4 w-4" />
 //                         Tutor – Sessions
 //                       </NavLink>
-//                       <NavLink
-//                         to="/me/tutor/profile"
-//                         className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                         onClick={() => setDrawerOpen(false)}
-//                       >
+//                       <NavLink to="/me/tutor/profile" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                         <Settings className="h-4 w-4" />
 //                         Tutor – Profile
 //                       </NavLink>
-//                       <NavLink
-//                         to="/me/tutor/availability"
-//                         className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                         onClick={() => setDrawerOpen(false)}
-//                       >
+//                       <NavLink to="/me/tutor/availability" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                         <CalendarClock className="h-4 w-4" />
 //                         Tutor – Availability
+//                       </NavLink>
+//                       <NavLink to="/instructor/quizzes" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+//                         <GraduationCap className="h-4 w-4" />
+//                         Instructor – Quizzes
+//                       </NavLink>
+//                       <NavLink to="/instructor/live" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+//                         <Video className="h-4 w-4" />
+//                         Instructor – Live Sessions
+//                       </NavLink>
+//                       <NavLink to="/instructor/resources" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+//                         <FolderOpen className="h-4 w-4" />
+//                         Instructor – Resources
+//                       </NavLink>
+//                       <NavLink to="/instructor/ebooks" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+//                         <FolderOpen className="h-4 w-4" />
+//                         Instructor – Ebook
 //                       </NavLink>
 //                     </>
 //                   )}
 
-//                   {user?.role === 'admin' && (
-//                     <NavLink
-//                       to="/admin"
-//                       className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                       onClick={() => setDrawerOpen(false)}
-//                     >
-//                       <Settings className="h-4 w-4" />
-//                       Admin
-//                     </NavLink>
-//                   )}
-
 //                   <button
-//                     onClick={() => {
-//                       logout();
-//                       setDrawerOpen(false);
-//                     }}
+//                     onClick={() => { logout(); setDrawerOpen(false); }}
 //                     className="rounded-lg border px-3 py-3 text-left text-sm inline-flex items-center gap-2"
 //                   >
 //                     <LogOutIcon className="h-4 w-4" />
@@ -913,29 +450,22 @@
 //                 </>
 //               ) : (
 //                 <>
-//                   <NavLink
-//                     to="/billing/plans"
-//                     className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                     onClick={() => setDrawerOpen(false)}
-//                   >
+//                   {/* Membership appears ONCE for logged-out */}
+//                   <NavLink to={MEMBERSHIP_PATH} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                     <Crown className="h-4 w-4" />
 //                     Membership
 //                   </NavLink>
 
-//                   {NAV_PUBLIC.map((item) => {
+//                   {navPublicClean.map((item) => {
 //                     const Ico = labelIconFor(item.label);
 //                     return (
-//                       <NavLink
-//                         key={item.to}
-//                         to={item.to}
-//                         className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
-//                         onClick={() => setDrawerOpen(false)}
-//                       >
+//                       <NavLink key={item.to} to={item.to} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
 //                         <Ico className="h-4 w-4" />
 //                         {item.label}
 //                       </NavLink>
 //                     );
 //                   })}
+
 //                   <div className="grid grid-cols-2 gap-2 pt-1">
 //                     <Link to="/login" onClick={() => setDrawerOpen(false)}>
 //                       <Button variant="ghost" full className="inline-flex items-center gap-1.5">
@@ -959,6 +489,7 @@
 //     </>
 //   );
 // }
+
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -1053,11 +584,20 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const profileRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const avatarHue = useMemo(() => (user ? ((user.name || 'U').length * 23) % 360 : 200), [user]);
+
+  // header shadow on scroll
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // close overlays on route change
   useEffect(() => {
@@ -1091,8 +631,13 @@ export default function Navbar() {
   };
 
   const navClass = ({ isActive: isHere }: { isActive: boolean }) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap
-     ${isHere ? 'text-primary underline underline-offset-[10px] decoration-2' : 'text-gray-700 hover:text-primary'}`;
+    [
+      "relative px-3 py-2 rounded-md text-[0.94rem] font-medium transition-colors whitespace-nowrap",
+      "after:content-[''] after:absolute after:left-3 after:right-3 after:-bottom-[7px] after:h-[2px] after:rounded-full after:transition-all after:duration-200",
+      isHere
+        ? "text-primary after:bg-primary"
+        : "text-slate-700 hover:text-primary after:bg-primary/0 hover:after:bg-primary/70"
+    ].join(' ');
 
   const membershipLabel = !isAuthed
     ? 'Membership'
@@ -1112,20 +657,34 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-[70] bg-white/90 backdrop-blur border-b shadow-[0_1px_0_rgba(0,0,0,0.04)]">
+      <header
+        className={[
+          "sticky top-0 z-[70] border-b transition-shadow",
+          // subtle gradient + glass
+          scrolled
+            ? "bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-[0_6px_22px_rgba(2,6,23,0.08)]"
+            : "bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50"
+        ].join(' ')}
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(70,130,180,0.06) 0%, rgba(255,255,255,0) 40%)"
+        }}
+      >
         <div className="container-app h-16 flex items-center gap-3 px-4 sm:px-6 lg:px-8">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2 min-w-0">
-            <img src="/images/logo.webp" alt="Educate The World" className="h-8 w-auto shrink-0" />
-            <span className="hidden sm:block font-semibold truncate max-w-[11rem] md:max-w-none">
+            <span className="inline-grid place-items-center h-9 w-9 rounded-xl bg-primary/10 ring-1 ring-primary/15">
+              <img src="/images/logo.webp" alt="Educate The World" className="h-6 w-auto" />
+            </span>
+            <span className="hidden lg:block font-semibold truncate max-w-[14rem] xl:max-w-none">
               Educate The World
             </span>
-            <span className="sm:hidden font-semibold">ETW</span>
+            <span className="lg:hidden font-semibold">ETW</span>
           </Link>
 
           {/* Desktop nav */}
           <nav aria-label="Primary" className="ml-auto hidden md:flex items-center gap-1">
-          <NavLink to="/tutors" className={navClass}>
+            <NavLink to="/tutors" className={navClass}>
               {withIcon(Users, 'Tutors')}
             </NavLink>
 
@@ -1154,23 +713,23 @@ export default function Navbar() {
                     className="ml-1 flex h-9 w-9 items-center justify-center rounded-full text-white ring-1 ring-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
                     style={{ backgroundColor: `hsl(${avatarHue} 70% 45%)` }}
                   >
-                    <span className="text-xs font-bold">{initials(user?.name)}</span>
+                    <span className="text-xs font-extrabold">{initials(user?.name)}</span>
                   </button>
 
                   {profileOpen && (
                     <div
                       role="menu"
-                      className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-100 bg-white p-2 shadow-lg z-[75]"
+                      className="absolute right-0 mt-2 w-[18rem] rounded-2xl border border-slate-100 bg-white/95 backdrop-blur p-2 shadow-xl z-[75]"
                     >
                       <div className="px-2 pb-2 text-sm font-medium truncate flex items-center gap-2">
                         <UserIcon className="h-4 w-4 text-gray-500" />
-                        <span>{user?.name}</span>
+                        <span className="max-w-[12rem] truncate">{user?.name}</span>
                       </div>
 
                       <NavLink
                         to={MEMBERSHIP_PATH}
                         role="menuitem"
-                        className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50"
                         onClick={() => setProfileOpen(false)}
                       >
                         <BadgeCheck className="h-4 w-4" />
@@ -1185,7 +744,7 @@ export default function Navbar() {
                       <NavLink
                         to="/me/sessions"
                         role="menuitem"
-                        className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50"
+                        className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50"
                         onClick={() => setProfileOpen(false)}
                       >
                         <CalendarClock className="h-4 w-4" />
@@ -1194,39 +753,39 @@ export default function Navbar() {
 
                       {canTeach && (
                         <>
-                          <NavLink to="/me/tutor/sessions" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/me/tutor/sessions" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <Users className="h-4 w-4" /><span>Tutor – Sessions</span>
                           </NavLink>
-                          <NavLink to="/me/tutor/profile" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/me/tutor/profile" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <Settings className="h-4 w-4" /><span>Tutor – Profile</span>
                           </NavLink>
-                          <NavLink to="/me/tutor/availability" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/me/tutor/availability" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <CalendarClock className="h-4 w-4" /><span>Tutor – Availability</span>
                           </NavLink>
-                          <NavLink to="/instructor/quizzes" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/instructor/quizzes" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <GraduationCap className="h-4 w-4" /><span>Instructor – Quizzes</span>
                           </NavLink>
-                          <NavLink to="/instructor/live" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/instructor/live" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <Video className="h-4 w-4" /><span>Instructor – Live Sessions</span>
                           </NavLink>
-                          <NavLink to="/instructor/resources" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/instructor/resources" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <FolderOpen className="h-4 w-4" /><span>Instructor – Resources</span>
                           </NavLink>
-                          <NavLink to="/instructor/ebooks" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                          <NavLink to="/instructor/ebooks" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                             <FolderOpen className="h-4 w-4" /><span>Instructor – Ebook</span>
                           </NavLink>
                         </>
                       )}
 
                       {user?.role === 'admin' && (
-                        <NavLink to="/admin" role="menuitem" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm hover:bg-gray-50" onClick={() => setProfileOpen(false)}>
+                        <NavLink to="/admin" role="menuitem" className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm hover:bg-slate-50" onClick={() => setProfileOpen(false)}>
                           <Settings className="h-4 w-4" /><span>Admin</span>
                         </NavLink>
                       )}
 
                       <button
                         onClick={() => { logout(); setProfileOpen(false); }}
-                        className="mt-1 w-full rounded-md px-2 py-2 text-left text-sm hover:bg-gray-50 inline-flex items-center gap-2"
+                        className="mt-1 w-full rounded-lg px-2.5 py-2 text-left text-sm hover:bg-slate-50 inline-flex items-center gap-2"
                         role="menuitem"
                       >
                         <LogOutIcon className="h-4 w-4" />
@@ -1254,13 +813,13 @@ export default function Navbar() {
 
                 <div className="flex items-center gap-2 pl-1">
                   <Link to="/login">
-                    <Button variant="ghost" className="inline-flex items-center gap-1.5">
+                    <Button variant="ghost" className="inline-flex items-center gap-1.5 rounded-full h-9 px-3">
                       <UserIcon className="h-4 w-4" />
                       Log in
                     </Button>
                   </Link>
                   <Link to="/register">
-                    <Button className="inline-flex items-center gap-1.5">
+                    <Button className="inline-flex items-center gap-1.5 rounded-full h-9 px-3">
                       <CreditCard className="h-4 w-4" />
                       Sign up
                     </Button>
@@ -1273,14 +832,14 @@ export default function Navbar() {
           {/* Mobile buttons */}
           <div className="md:hidden ml-auto flex items-center gap-1">
             <button
-              className="p-2 rounded hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+              className="p-2 rounded-lg hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
               aria-label="Search"
               onClick={() => setSearchOpen(true)}
             >
               <Search className="h-5 w-5" />
             </button>
             <button
-              className="p-2 rounded hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+              className="p-2 rounded-lg hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
               aria-label="Menu"
               onClick={() => setDrawerOpen(true)}
             >
@@ -1292,8 +851,8 @@ export default function Navbar() {
 
       {/* Search overlay (mobile) */}
       {searchOpen && (
-        <div className="fixed inset-0 z-[80] bg-black/30" onClick={() => setSearchOpen(false)}>
-          <div className="absolute left-0 right-0 top-0 bg-white border-b rounded-b-2xl shadow-md" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-[80] bg-black/35" onClick={() => setSearchOpen(false)}>
+          <div className="absolute left-0 right-0 top-0 bg-white border-b rounded-b-2xl shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="container-app py-3 px-4">
               <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border px-3 py-2 shadow-sm">
                 <button type="button" className="p-2 rounded hover:bg-gray-100" aria-label="Close" onClick={() => setSearchOpen(false)}>
@@ -1318,9 +877,9 @@ export default function Navbar() {
 
       {/* Drawer (mobile) */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-[80] bg-black/30" onClick={() => setDrawerOpen(false)}>
+        <div className="fixed inset-0 z-[80] bg-black/35" onClick={() => setDrawerOpen(false)}>
           <div
-            className="absolute right-0 top-0 h-full w-[88%] max-w-sm bg-white shadow-xl p-4 pb-[max(16px,env(safe-area-inset-bottom))] rounded-l-2xl flex flex-col"
+            className="absolute right-0 top-0 h-full w-[88%] max-w-sm bg-white shadow-2xl p-4 pb-[max(16px,env(safe-area-inset-bottom))] rounded-l-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -1334,9 +893,10 @@ export default function Navbar() {
             </div>
 
             <div className="mt-4 grid gap-2 overflow-y-auto">
+              <div className="text-[11px] uppercase tracking-wide text-slate-500 px-1">Explore</div>
               <NavLink
                 to="/tutors"
-                className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2"
+                className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2"
                 onClick={() => setDrawerOpen(false)}
               >
                 <Users className="h-4 w-4" />
@@ -1345,7 +905,8 @@ export default function Navbar() {
 
               {isAuthed ? (
                 <>
-                  <NavLink to={MEMBERSHIP_PATH} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                  <div className="text-[11px] uppercase tracking-wide text-slate-500 px-1 pt-2">Account</div>
+                  <NavLink to={MEMBERSHIP_PATH} className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                     <BadgeCheck className="h-4 w-4" />
                     Membership {(!memLoading && isActive) && (
                       <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200">
@@ -1357,45 +918,46 @@ export default function Navbar() {
                   {NAV_AUTH.map((item) => {
                     const Ico = labelIconFor(item.label);
                     return (
-                      <NavLink key={item.to} to={item.to} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink key={item.to} to={item.to} className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <Ico className="h-4 w-4" />
                         {item.label}
                       </NavLink>
                     );
                   })}
 
-                  <NavLink to="/me/sessions" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                  <NavLink to="/me/sessions" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                     <CalendarClock className="h-4 w-4" />
                     My Sessions
                   </NavLink>
 
                   {canTeach && (
                     <>
-                      <NavLink to="/me/tutor/sessions" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <div className="text-[11px] uppercase tracking-wide text-slate-500 px-1 pt-2">Teaching</div>
+                      <NavLink to="/me/tutor/sessions" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <Users className="h-4 w-4" />
                         Tutor – Sessions
                       </NavLink>
-                      <NavLink to="/me/tutor/profile" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/me/tutor/profile" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <Settings className="h-4 w-4" />
                         Tutor – Profile
                       </NavLink>
-                      <NavLink to="/me/tutor/availability" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/me/tutor/availability" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <CalendarClock className="h-4 w-4" />
                         Tutor – Availability
                       </NavLink>
-                      <NavLink to="/instructor/quizzes" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/instructor/quizzes" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <GraduationCap className="h-4 w-4" />
                         Instructor – Quizzes
                       </NavLink>
-                      <NavLink to="/instructor/live" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/instructor/live" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <Video className="h-4 w-4" />
                         Instructor – Live Sessions
                       </NavLink>
-                      <NavLink to="/instructor/resources" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/instructor/resources" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <FolderOpen className="h-4 w-4" />
                         Instructor – Resources
                       </NavLink>
-                      <NavLink to="/instructor/ebooks" className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink to="/instructor/ebooks" className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <FolderOpen className="h-4 w-4" />
                         Instructor – Ebook
                       </NavLink>
@@ -1404,7 +966,7 @@ export default function Navbar() {
 
                   <button
                     onClick={() => { logout(); setDrawerOpen(false); }}
-                    className="rounded-lg border px-3 py-3 text-left text-sm inline-flex items-center gap-2"
+                    className="rounded-xl border px-3 py-3 text-left text-sm inline-flex items-center gap-2"
                   >
                     <LogOutIcon className="h-4 w-4" />
                     Logout
@@ -1413,7 +975,8 @@ export default function Navbar() {
               ) : (
                 <>
                   {/* Membership appears ONCE for logged-out */}
-                  <NavLink to={MEMBERSHIP_PATH} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                  <div className="text-[11px] uppercase tracking-wide text-slate-500 px-1 pt-2">Get Started</div>
+                  <NavLink to={MEMBERSHIP_PATH} className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                     <Crown className="h-4 w-4" />
                     Membership
                   </NavLink>
@@ -1421,7 +984,7 @@ export default function Navbar() {
                   {navPublicClean.map((item) => {
                     const Ico = labelIconFor(item.label);
                     return (
-                      <NavLink key={item.to} to={item.to} className="rounded-lg border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+                      <NavLink key={item.to} to={item.to} className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
                         <Ico className="h-4 w-4" />
                         {item.label}
                       </NavLink>
@@ -1430,13 +993,13 @@ export default function Navbar() {
 
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     <Link to="/login" onClick={() => setDrawerOpen(false)}>
-                      <Button variant="ghost" full className="inline-flex items-center gap-1.5">
+                      <Button variant="ghost" full className="inline-flex items-center gap-1.5 rounded-full h-10">
                         <UserIcon className="h-4 w-4" />
                         Log in
                       </Button>
                     </Link>
                     <Link to="/register" onClick={() => setDrawerOpen(false)}>
-                      <Button full className="inline-flex items-center gap-1.5">
+                      <Button full className="inline-flex items-center gap-1.5 rounded-full h-10">
                         <CreditCard className="h-4 w-4" />
                         Sign up
                       </Button>
