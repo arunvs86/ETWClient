@@ -57,10 +57,17 @@ export type CreateLiveSessionBody = {
   zoom?: ZoomInput;           // ← NEW
 };
 
-export type EntitlementResponse =
-  | { canJoin: true; source: 'free' | 'membership' | 'purchase' }
-  | { canJoin: false; reason: 'auth_required' | 'purchase_required' | 'purchase_required_even_for_members' };
+// export type EntitlementResponse =
+//   | { canJoin: true; source: 'free' | 'membership' | 'purchase' }
+//   | { canJoin: false; reason: 'auth_required' | 'purchase_required' | 'purchase_required_even_for_members' };
 
+export type EntitlementResponse = {
+    hasAccess?: boolean; // new, preferred
+    canJoin?: boolean;   // legacy (previously used for "owns access")
+    source?: 'free' | 'membership' | 'purchase';
+    reason?: 'auth_required' | 'purchase_required' | 'purchase_required_even_for_members';
+  };
+  
 export function prettyPrice(p?: LiveSessionPricing) {
   if (!p || p.type === 'free' || !p.amountMinor) return 'Free';
   const n = (p.amountMinor || 0) / 100;

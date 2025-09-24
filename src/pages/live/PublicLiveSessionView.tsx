@@ -51,16 +51,11 @@ export default function PublicLiveSessionView() {
   const { joinOpen, startsIn } = useJoinWindow(session);
 
   const needAuth = !loading && !user;
-  const ent = qEnt.data;
-// Backward-compatible: prefer hasAccess; fall back to old canJoin if present.
-const hasAccess = Boolean(
-  ent?.hasAccess ??
-  ent?.canJoin ??         // older API returned canJoin to mean "owns access"
-  ent?.owned ??           // optional legacy shapes
-  (ent?.ticket === 'owned')
-);
-// Time gate handled on client:
-const canJoinNow = hasAccess && joinOpen;
+  const ent = qEnt.data as { hasAccess?: boolean; canJoin?: boolean; source?: string } | undefined;
+    // Prefer hasAccess; fall back to old "canJoin" which previously meant ownership
+    const hasAccess = Boolean(ent?.hasAccess ?? ent?.canJoin);
+    // Time gate is client-side
+    const canJoinNow = hasAccess && joinOpen;
 
   const priceLabel = prettyPrice(session?.pricing);
 
@@ -202,6 +197,9 @@ const canJoinNow = hasAccess && joinOpen;
         <div className="mt-2 text-xs text-amber-700">
           You own access. The join link will be enabled {JOIN_WINDOW_MIN} minutes before the start time.
         </div>
+        {ent?.source && (
+          <div className="mt-1 text-[11px] text-gray-600">Access via {ent.source}.</div>
+        )}
       </>
     )
   ) : session!.pricing.type === 'paid' ? (
