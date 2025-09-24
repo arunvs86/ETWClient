@@ -52,7 +52,16 @@ export default function PublicLiveSessionView() {
 
   const needAuth = !loading && !user;
   const ent = qEnt.data;
-  const isEntitled = !!ent && 'canJoin' in ent && ent.canJoin;
+// Backward-compatible: prefer hasAccess; fall back to old canJoin if present.
+const hasAccess = Boolean(
+  ent?.hasAccess ??
+  ent?.canJoin ??         // older API returned canJoin to mean "owns access"
+  ent?.owned ??           // optional legacy shapes
+  (ent?.ticket === 'owned')
+);
+// Time gate handled on client:
+const canJoinNow = hasAccess && joinOpen;
+
   const priceLabel = prettyPrice(session?.pricing);
 
   async function onJoin() {
@@ -107,7 +116,8 @@ export default function PublicLiveSessionView() {
     }, 1500);
     return () => clearInterval(i);
   }, [pollEntitlement, pollUntil, id, qc]);
-  useEffect(() => { if (isEntitled) setPollEntitlement(false); }, [isEntitled]);
+  // useEffect(() => { if (isEntitled) setPollEntitlement(false); }, [isEntitled]);
+  useEffect(() => { if (hasAccess) setPollEntitlement(false); }, [hasAccess]);
 
   const isLoading = qSession.isLoading;
   const isError = qSession.isError || (!qSession.isLoading && !session);
@@ -171,39 +181,44 @@ export default function PublicLiveSessionView() {
             </div>
 
             <div className="mt-4">
-              {isLoading ? (
-                <Button disabled full>Loading…</Button>
-              ) : isError ? (
-                <Button disabled full>Unavailable</Button>
-              ) : needAuth ? (
-                <Button onClick={() => nav(`/login?next=/live/${session!.id}`)} full>Login to continue</Button>
-              ) : qEnt.isLoading ? (
-                <Button disabled full>Checking access…</Button>
-              ) : isEntitled ? (
-                joinOpen ? (
-                  <Button onClick={onJoin} full className="inline-flex items-center justify-center gap-2">
-                    <PlayCircle className="h-4 w-4" /> Join now
-                  </Button>
-                ) : (
-                  <Button disabled full title={`Join opens ~${JOIN_WINDOW_MIN} min before start`}>
-                    Join (not open yet)
-                  </Button>
-                )
-              ) : session!.pricing.type === 'paid' ? (
-                session!.membersAccess === 'free' ? (
-                  <Button onClick={() => nav('/billing/plans')} full>Get membership</Button>
-                ) : (
-                  <div className="flex flex-col gap-2">
-                    <Button onClick={onBuy} full>Buy access</Button>
-                    {import.meta.env.DEV && import.meta.env.VITE_LIVESESSIONS_DEV_FAKE_PURCHASE === 'true' && (
-                      <button onClick={onDevBuy} className="text-xs underline text-gray-600">Dev: simulate purchase</button>
-                    )}
-                  </div>
-                )
-              ) : (
-                <Button disabled full>Join (not allowed)</Button>
-              )}
-            </div>
+  {isLoading ? (
+    <Button disabled full>Loading…</Button>
+  ) : isError ? (
+    <Button disabled full>Unavailable</Button>
+  ) : needAuth ? (
+    <Button onClick={() => nav(`/login?next=/live/${session!.id}`)} full>Login to continue</Button>
+  ) : qEnt.isLoading ? (
+    <Button disabled full>Checking access…</Button>
+  ) : hasAccess ? (
+    canJoinNow ? (
+      <Button onClick={onJoin} full className="inline-flex items-center justify-center gap-2">
+        <PlayCircle className="h-4 w-4" /> Join now
+      </Button>
+    ) : (
+      <>
+        <Button disabled full title={`Link enables ${JOIN_WINDOW_MIN} min before start`}>
+          Join (enabled {JOIN_WINDOW_MIN} min before start)
+        </Button>
+        <div className="mt-2 text-xs text-amber-700">
+          You own access. The join link will be enabled {JOIN_WINDOW_MIN} minutes before the start time.
+        </div>
+      </>
+    )
+  ) : session!.pricing.type === 'paid' ? (
+    session!.membersAccess === 'free' ? (
+      <Button onClick={() => nav('/billing/plans')} full>Get membership</Button>
+    ) : (
+      <div className="flex flex-col gap-2">
+        <Button onClick={onBuy} full>Buy access</Button>
+        {import.meta.env.DEV && import.meta.env.VITE_LIVESESSIONS_DEV_FAKE_PURCHASE === 'true' && (
+          <button onClick={onDevBuy} className="text-xs underline text-gray-600">Dev: simulate purchase</button>
+        )}
+      </div>
+    )
+  ) : (
+    <Button disabled full>Join (not allowed)</Button>
+  )}
+</div>
 
             <div className="mt-2 text-xs text-gray-500">
               {pollEntitlement
