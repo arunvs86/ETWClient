@@ -130,6 +130,7 @@ import { useQuery } from '@tanstack/react-query'
 import { listLiveSessions } from '@/lib/liveSessions.api'
 import LiveSessionCard from '@/components/live/LiveSessionCard'
 import { CalendarClock, Filter, Zap, Video, Ticket, Loader2, ChevronLeft, ChevronRight, History } from 'lucide-react'
+import PurchasedRail from '@/components/purchases/PurchasedRail';
 
 type TimeFilter = 'upcoming' | 'past' | 'all'
 type PriceFilter = 'all' | 'free' | 'paid'
@@ -193,6 +194,9 @@ export default function PublicLiveSessionsList() {
   return (
     <div className="space-y-6">
       {/* Header / Filters */}
+      <aside className="h-fit space-y-4">
+  <PurchasedRail title="My Live sessions" kinds="live-session" />
+</aside>
       <div className="rounded-2xl border bg-gradient-to-r from-indigo-50 to-violet-50">
         <div className="p-5 md:p-7">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

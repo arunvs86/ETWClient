@@ -96,6 +96,7 @@ import { useQuery } from '@tanstack/react-query'
 import { listResources } from '@/lib/resources.api'
 import ResourceCard from '@/components/resource/ResourceCard'
 import { useSearchState } from '@/hooks/useSearchState'
+import PurchasedRail from '@/components/purchases/PurchasedRail';
 
 const DEFAULTS = { page: 1, limit: 12, sort: 'newest' }
 
@@ -121,6 +122,9 @@ export default function ResourcesList() {
   return (
     <div className="space-y-5">
       {/* Header */}
+      <aside className="h-fit space-y-4">
+  <PurchasedRail title="My Resources" kinds="resource" />
+</aside>
       <div className="rounded-2xl border bg-gradient-to-r from-indigo-50 to-violet-50 p-4 sm:p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
