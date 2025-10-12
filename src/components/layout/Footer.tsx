@@ -668,19 +668,23 @@ export default function Footer() {
   return (
     <footer className="mt-16 border-t bg-white" role="contentinfo">
      <nav aria-label="Footer" className="container-app py-12 px-4 sm:px-6 lg:px-8">
-  <div className="grid items-start gap-10 sm:grid-cols-2 lg:grid-cols-6">
+  <div className="grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-6">
     {/* Brand */}
-    <div className="flex flex-col gap-2 lg:col-span-1">
+    <div className="flex flex-col space-y-3 lg:col-span-1">
       <div className="flex items-center gap-2">
         <img src="/images/logo.webp" alt="ETW" className="h-8 w-auto" />
         <span className="font-semibold">Educate The World</span>
       </div>
-      <p className="text-sm text-gray-600">Quality learning, accessible to everyone.</p>
+      <p className="text-sm text-gray-600">
+        Quality learning, accessible to everyone.
+      </p>
     </div>
 
     {/* Company */}
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Company</h3>
+    <div className="flex flex-col space-y-3">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        Company
+      </h3>
       <ul className="space-y-2 text-gray-700">
         <li>
           <button onClick={() => setModal("about")} className={linkBtn}>
@@ -688,12 +692,18 @@ export default function Footer() {
           </button>
         </li>
         <li>
-          <Link to="/courses" className="text-blue-600 hover:underline inline-flex items-center gap-2">
+          <Link
+            to="/courses"
+            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+          >
             <GraduationCap className="h-4 w-4" /> Courses
           </Link>
         </li>
         <li>
-          <Link to="/events" className="text-blue-600 hover:underline inline-flex items-center gap-2">
+          <Link
+            to="/events"
+            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+          >
             <Calendar className="h-4 w-4" /> Events
           </Link>
         </li>
@@ -706,11 +716,16 @@ export default function Footer() {
     </div>
 
     {/* For Students */}
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">For Students</h3>
+    <div className="flex flex-col space-y-3">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        For Students
+      </h3>
       <ul className="space-y-2 text-gray-700">
         <li>
-          <Link to="/login" className="text-blue-600 hover:underline inline-flex items-center gap-2">
+          <Link
+            to="/login"
+            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+          >
             <MessageCircle className="h-4 w-4" /> Student Login
           </Link>
         </li>
@@ -731,11 +746,16 @@ export default function Footer() {
     </div>
 
     {/* For Tutors */}
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">For Tutors</h3>
+    <div className="flex flex-col space-y-3">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        For Tutors
+      </h3>
       <ul className="space-y-2 text-gray-700">
         <li>
-          <Link to="/teach" className="text-blue-600 hover:underline inline-flex items-center gap-2">
+          <Link
+            to="/teach"
+            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+          >
             <GraduationCap className="h-4 w-4" /> Tutors Login
           </Link>
         </li>
@@ -743,8 +763,10 @@ export default function Footer() {
     </div>
 
     {/* Connect */}
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Connect</h3>
+    <div className="flex flex-col space-y-3">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        Connect
+      </h3>
       <ul className="space-y-2">
         <li>
           <a
@@ -757,13 +779,16 @@ export default function Footer() {
           </a>
         </li>
         <li>
-          <a className="text-blue-600 hover:underline inline-flex items-center gap-2" href="tel:+447958913329">
+          <a
+            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+            href="tel:+447958913329"
+          >
             <Phone className="h-4 w-4" /> 07958913329
           </a>
         </li>
         <li>
           <a
-            className="text-blue-600 hover:underline inline-flex items-center gap-2"
+            className="text-blue-600 mt-3 hover:underline inline-flex items-center gap-2"
             href="mailto:educatemedicalllp@gmail.com"
           >
             <Mail className="h-4 w-4" /> educatemedicalllp@gmail.com
@@ -783,39 +808,45 @@ export default function Footer() {
     </div>
 
     {/* Get the App */}
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Get the App</h3>
-      <div className="mt-1 flex items-center gap-3">
-        <a
-          href="https://play.google.com/store/apps/details?id=com.educatetheworld"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Get it on Google Play"
-          className="inline-block"
-        >
-          <img
-            src="/images/google-play-badge.svg"
-            alt="Get it on Google Play"
-            className="block h-[80px] w-auto object-contain"
-          />
-        </a>
-        <a
-          href="https://apps.apple.com/app/educatetheworld/id1234567890"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Download on the App Store"
-          className="inline-block"
-        >
-          <img
-            src="/images/app-store-badge.png"
-            alt="Download on the App Store"
-            className="block h-[80px] w-auto object-contain"
-          />
-        </a>
-      </div>
-    </div>
+    {/* Get the App */}
+<div className="flex flex-col space-y-2">
+  <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+    Get the App
+  </h3>
+  <p className="text-base font-medium text-gray-900 leading-tight">
+    EducateTheWorld
+  </p>
+  <div className="flex items-center gap-3 pt-1">
+    <a
+      href="https://play.google.com/store/apps/details?id=com.educatetheworld"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Get it on Google Play"
+    >
+      <img
+        src="/images/google-play-badge.svg"
+        alt="Get it on Google Play"
+        className="block h-[80px] w-auto object-contain hover:opacity-90"
+      />
+    </a>
+    <a
+      href="https://apps.apple.com/app/educatetheworld/id1234567890"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Download on the App Store"
+    >
+      <img
+        src="/images/app-store-badge.png"
+        alt="Download on the App Store"
+        className="block h-[80px] w-auto object-contain hover:opacity-90"
+      />
+    </a>
+  </div>
+</div>
+
   </div>
 </nav>
+
 
 
       <div className="border-t border-gray-100">

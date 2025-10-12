@@ -876,12 +876,12 @@ export default function Home() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <WhatsAppLink href="https://chat.whatsapp.com/J7VsK9IUuP6CQypYRIlyJC">
-                  Join the whatsapp group for a career in Medicine
+                <WhatsAppLink href="https://chat.whatsapp.com/IlVXTYgZIxCCOKMV9jtQjY">
+                  Join the whatsapp group
                 </WhatsAppLink>
-                <WhatsAppLink href="https://chat.whatsapp.com/D8NOwTp38XfANaWLWnrclv">
+                {/* <WhatsAppLink href="https://chat.whatsapp.com/D8NOwTp38XfANaWLWnrclv">
                 Join the whatsapp group for information on University courses
-                </WhatsAppLink>
+                </WhatsAppLink> */}
               </div>
             </div>
           </div>
