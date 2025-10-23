@@ -809,42 +809,86 @@ export default function Footer() {
 
     {/* Get the App */}
     {/* Get the App */}
-<div className="flex flex-col space-y-2">
-  <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-    Get the App
-  </h3>
-  <p className="text-base font-medium text-gray-900 leading-tight">
-    EducateTheWorld
-  </p>
-  <div className="flex items-center gap-3 pt-1">
-    <a
-      href="https://play.google.com/store/apps/details?id=com.educatetheworld"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Get it on Google Play"
-    >
-      <img
-        src="/images/google-play-badge.svg"
-        alt="Get it on Google Play"
-        className="block h-[80px] w-auto object-contain hover:opacity-90"
-      />
-    </a>
-    <a
-      href="https://apps.apple.com/app/educatetheworld/id1234567890"
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Download on the App Store"
-    >
-      <img
-        src="/images/app-store-badge.png"
-        alt="Download on the App Store"
-        className="block h-[80px] w-auto object-contain hover:opacity-90"
-      />
-    </a>
+
+
+  </div>
+  {/* Get the App — full-width panel beneath the footer grid */}
+<div className="mt-10">
+  <div className="mx-auto max-w-4xl rounded-2xl border border-gray-200 bg-white/70 p-5 shadow-sm backdrop-blur-sm sm:p-6">
+    <div className="flex flex-col items-center text-center">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        Get the App
+      </h3>
+      <p className="mt-1 text-base font-medium text-gray-900">EducateTheWorld</p>
+
+      {/* Store badges */}
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.educatetheworld"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Get it on Google Play"
+        >
+          <img
+            src="/images/google-play-badge.svg"
+            alt="Get it on Google Play"
+            className="h-[56px] w-auto object-contain hover:opacity-90"
+          />
+        </a>
+        <a
+          href="https://apps.apple.com/app/educatetheworld/id1234567890"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Download on the App Store"
+        >
+          <img
+            src="/images/app-store-badge.png"
+            alt="Download on the App Store"
+            className="h-[56px] w-auto object-contain hover:opacity-90"
+          />
+        </a>
+      </div>
+
+      {/* QR codes */}
+      <div className="mt-5 grid w-full max-w-md grid-cols-2 gap-4 sm:gap-5">
+        {/* Google Play QR */}
+        <a
+          href="https://play.google.com/store/apps/details?id=com.educatetheworld"
+          target="_blank"
+          rel="noreferrer"
+          className="group flex flex-col items-center rounded-xl border border-gray-200 bg-gray-50/60 p-3 shadow-sm transition hover:bg-white hover:shadow-md"
+          aria-label="Scan to download on Google Play"
+        >
+          <img
+            src="/images/QRPlay.jpeg"
+            alt="QR code for Google Play"
+            className="h-24 w-24 object-contain sm:h-28 sm:w-28"
+            loading="lazy"
+          />
+          <span className="mt-2 text-[11px] text-gray-600">Scan for Google Play</span>
+        </a>
+
+        {/* App Store QR */}
+        <a
+          href="https://apps.apple.com/app/educatetheworld/id1234567890"
+          target="_blank"
+          rel="noreferrer"
+          className="group flex flex-col items-center rounded-xl border border-gray-200 bg-gray-50/60 p-3 shadow-sm transition hover:bg-white hover:shadow-md"
+          aria-label="Scan to download on the App Store"
+        >
+          <img
+            src="/images/QRApp.jpeg"
+            alt="QR code for App Store"
+            className="h-24 w-24 object-contain sm:h-28 sm:w-28"
+            loading="lazy"
+          />
+          <span className="mt-2 text-[11px] text-gray-600">Scan for App Store</span>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
-  </div>
 </nav>
 
 
