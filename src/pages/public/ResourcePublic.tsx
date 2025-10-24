@@ -131,7 +131,18 @@ export default function ResourcePublic() {
         {showItems && !isFree && <div className="text-xs text-gray-600">You own this resource.</div>}
 
         {resource.category && <div className="text-sm text-gray-700">Category: <b>{resource.category}</b></div>}
-        {resource.thumbnail && <img src={resource.thumbnail} alt={resource.title} className="rounded-md" />}
+        {/* {resource.thumbnail && <img src={resource.thumbnail} alt={resource.title} className="rounded-md" />} */}
+        {resource.thumbnail && (
+  <div className="rounded-md border shadow-sm bg-white flex items-center justify-center p-2">
+    <img
+      src={resource.thumbnail}
+      alt={resource.title}
+      className="max-h-80 w-auto object-contain"
+      loading="lazy"
+    />
+  </div>
+)}
+
       </aside>
     </div>
   );
