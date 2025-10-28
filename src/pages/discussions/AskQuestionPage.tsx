@@ -101,7 +101,7 @@ export default function AskQuestionPage() {
             <MarkdownEditor
               value={body}
               onChange={setBody}
-              placeholder="Include what you tried, expected vs actual, steps, screenshots, etc."
+              placeholder="Include what you tried, expected vs actual, steps etc."
             />
           </div>
         </div>
