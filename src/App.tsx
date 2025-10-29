@@ -250,12 +250,16 @@ import MySessionsPage from '@/pages/me/MySessionsPage';
 import TutorSessionsPage from '@/pages/me/TutorSessionsPage';
 import TutorProfileEditorPage from '@/pages/me/TutorProfileEditorPage';
 import TutorAvailabilityEditorPage from '@/pages/me/TutorAvailabilityEditorPage';
+import TutorRequestPage from '@/pages/tutors/TutorRequestPage';
+import TutorRequestSuccess from '@/pages/tutors/TutorRequestSuccess';
+
 
 import EbooksList from '@/pages/ebooks/EbooksList'
 import EbookPublic from '@/pages/ebooks/EbookPublic'
 
 import MyEbooksPage from '@/pages/instructor/ebooks/MyEbooksPage'
 import EbookUpsertPage from '@/pages/instructor/ebooks/EbookUpsertPage'
+import EditLiveSession from './pages/instructor/live/EditLiveSession';
 
 export default function App() {
   useEffect(() => {
@@ -292,6 +296,7 @@ export default function App() {
               <Route path="/billing/plans" element={<PlansPage />} />
               <Route path="/live" element={<PublicLiveSessionsList />} />
               <Route path="/live/:id" element={<PublicLiveSessionView />} />
+              <Route path="/live/:id/edit" element={<EditLiveSession />} />
               <Route path="/billing/live/success" element={<LiveCheckoutSuccessPage />} />
               <Route path="/billing/live/cancel" element={<LiveCheckoutCancelPage />} />
 
@@ -362,6 +367,9 @@ export default function App() {
 
                 <Route path="/me/tutor/profile" element={<TutorProfileEditorPage />} />
                 <Route path="/me/tutor/availability" element={<TutorAvailabilityEditorPage />} />
+
+                <Route path="/tutors/request" element={<TutorRequestPage />} />
+                <Route path="/tutors/request-success" element={<TutorRequestSuccess />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />
