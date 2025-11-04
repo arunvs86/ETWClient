@@ -181,7 +181,7 @@ export default function Navbar() {
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2 min-w-0">
             <span className="inline-grid place-items-center h-9 w-9 rounded-xl bg-primary/10 ring-1 ring-primary/15">
-              <img src="/images/logo.webp" alt="Educate The World" className="h-6 w-auto" />
+              <img src="/images/logo.jpeg" alt="Educate The World" className="h-6 w-auto" />
             </span>
             <span className="hidden lg:block font-semibold truncate max-w-[14rem] xl:max-w-none">
               Educate The World

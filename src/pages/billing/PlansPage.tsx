@@ -583,7 +583,13 @@ export default function PlansPage() {
           <div className="mt-8">
             <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">What’s included</h3>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-              {['All past videos', 'Member support (≤72h)', 'UCAT Sample eBook', 'MMI Practice eBook'].map(t => (
+              {
+              ['All past videos', 
+                'Member support (≤72h)', 
+                'UCAT Sample eBook', 
+                'MMI Practice eBook',
+                "⁠Get assigned a Medical Student (Medical Mentor) who will contact the Year 12, Year 13 students monthly to offer support and signpost.",
+                "⁠Will get our books and publications for free."].map(t => (
                 <li key={t} className="flex items-start gap-3">
                   <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
                     <CheckIcon className="h-3.5 w-3.5" />
@@ -610,6 +616,8 @@ export default function PlansPage() {
           </div>
 
           <p className="mt-3 text-sm text-gray-600">Keep access forever. No renewals, no recurring fees.</p>
+          <p className="mt-3 text-sm text-gray-600">Enjoy the same perks of a Membership for a lifetime.</p>
+
 
           <div className="mt-6">
             <CTA planId="lifetime" />
