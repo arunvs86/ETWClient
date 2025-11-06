@@ -693,7 +693,7 @@ export default function Footer() {
         </li>
         <li>
           <Link
-            to="/courses"
+            to="/live"
             className="text-blue-600 hover:underline inline-flex items-center gap-2"
           >
             <GraduationCap className="h-4 w-4" /> Courses
@@ -729,14 +729,14 @@ export default function Footer() {
             <MessageCircle className="h-4 w-4" /> Student Login
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             to="/courses?category=medicine"
             className="text-blue-600 hover:underline inline-flex items-center gap-2"
           >
             <GraduationCap className="h-4 w-4" /> Career in Medicine
           </Link>
-        </li>
+        </li> */}
         <li>
           <button onClick={() => setModal("terms")} className={linkBtn}>
             <BookOpen className="h-4 w-4" /> Terms &amp; Conditions
