@@ -17,6 +17,8 @@ export type PublicResource = {
   description?: string
   category?: string
   thumbnail?: string
+  isReel?: boolean
+  reelUrl?: string
   pricing?: {
     amountMinor?: number
     currency?: 'GBP' | 'USD' | 'EUR'

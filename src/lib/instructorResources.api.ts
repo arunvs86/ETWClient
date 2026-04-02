@@ -26,6 +26,8 @@ export type Resource = {
   description?: string
   category?: string
   thumbnail?: string
+  isReel?: boolean
+  reelUrl?: string
   pricing?: ResourcePricing
   publishedAt?: string | null
   updatedAt?: string
@@ -69,7 +71,7 @@ export async function getMyResource(resourceId: string) {
 
 export async function updateResourceBasics(
   resourceId: string,
-  body: Partial<Pick<Resource, 'title' | 'description' | 'category' | 'thumbnail'>>
+  body: Partial<Pick<Resource, 'title' | 'description' | 'category' | 'thumbnail' | 'isReel' | 'reelUrl'>>
 ) {
   const { data } = await api.patch<{ resource: Resource }>(
     `/instructor/resources/${resourceId}`,

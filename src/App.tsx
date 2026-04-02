@@ -233,6 +233,7 @@ import MyResourcesPage from './pages/instructor/MyResourcesPage';
 import ResourceUpsertPage from './pages/instructor/ResourceUpsertPage';
 import ResourcesList from './pages/public/ResourcesList';
 import ResourcePublic from './pages/public/ResourcePublic';
+import ReelsList from './pages/public/ReelsList';
 
 import SuccessPage from './pages/billing/SuccessPage';
 
@@ -303,6 +304,7 @@ export default function App() {
               {/* Public resources */}
               <Route path="/resources" element={<ResourcesList />} />
               <Route path="/resources/:slug" element={<ResourcePublic />} />
+              <Route path="/reels" element={<ReelsList />} />
 
               {/* Public quizzes */}
               <Route path="/quizzes" element={<PublicQuizListPage />} />

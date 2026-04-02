@@ -92,6 +92,8 @@ export default function ResourceUpsertPage() {
   const [amountMajor, setAmountMajor] = useState('0')
   const [currency, setCurrency] = useState('GBP')
   const [includedInMembership, setIncludedInMembership] = useState(true)
+  const [isReel, setIsReel] = useState(false)
+  const [reelUrl, setReelUrl] = useState('')
 
   const [saving, setSaving] = useState(false)
   const [uploadingThumb, setUploadingThumb] = useState(false)
@@ -108,6 +110,8 @@ export default function ResourceUpsertPage() {
     setAmountMajor(((p.amountMinor || 0) / 100).toFixed(2))
     setCurrency(p.currency || 'GBP')
     setIncludedInMembership(!!p.includedInMembership)
+    setIsReel(!!resource.isReel)
+    setReelUrl(resource.reelUrl || '')
   }, [resource])
 
   // ---------------- publish/archive etc ----------------
@@ -146,6 +150,8 @@ export default function ResourceUpsertPage() {
       description,
       category: category.trim(),
       thumbnail,
+      isReel,
+      reelUrl: reelUrl.trim(),
     })
     return created.id
   }
@@ -163,6 +169,8 @@ export default function ResourceUpsertPage() {
         description,
         category: category.trim(),
         thumbnail,
+        isReel,
+        reelUrl: reelUrl.trim(),
       })
       const n = Number(amountMajor)
       await updateResourcePricing(idLocal, {
@@ -338,6 +346,33 @@ export default function ResourceUpsertPage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Reels */}
+          <div className="rounded-md border bg-white p-4 sm:p-5 space-y-3">
+            <div className="text-sm font-medium">Reels</div>
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={isReel}
+                onChange={(e) => setIsReel(e.target.checked)}
+              />
+              <span>Show in Reels section (header nav)</span>
+            </label>
+            {isReel && (
+              <label className="text-sm block">
+                Instagram Reel URL
+                <input
+                  className="mt-1 w-full h-10 rounded-md border px-3"
+                  value={reelUrl}
+                  onChange={(e) => setReelUrl(e.target.value)}
+                  placeholder="https://www.instagram.com/reel/ABC123/"
+                />
+                <p className="mt-1 text-[11px] text-gray-500">
+                  Paste the full Instagram reel URL. It will be embedded on the Reels page.
+                </p>
+              </label>
+            )}
           </div>
 
           {/* Pricing */}
