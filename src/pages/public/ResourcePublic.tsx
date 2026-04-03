@@ -61,8 +61,10 @@ export default function ResourcePublic() {
   if (isError || !data) return <div className="text-red-600">Resource not found.</div>;
 
   const { resource, items } = data;
-  const isFree = (resource.pricing?.amountMinor ?? 0) === 0;
-  const showItems = resource.unlocked || isFree;
+  const isFree = (resource.pricing?.amountMinor ?? 0) === 0 && !resource.pricing?.includedInMembership;
+  const showItems = resource.unlocked ?? isFree;
+  console.log("resource item" , resource)
+  console.log("Items: ", items)
   const priceLabel = formatPrice(resource.pricing?.amountMinor, resource.pricing?.currency || 'GBP', resource.pricing?.isFree);
 
   return (
@@ -110,10 +112,42 @@ export default function ResourcePublic() {
             <p className="text-sm text-gray-700">Purchase to unlock all files and links in this pack.</p>
           </div>
         )}
+
+        {/* {items.length > 0 && (
+            <div className="card p-4">
+              <h3 className="font-medium mb-2">Resources</h3>
+              <ul className="space-y-2">
+                {items.map((it: PublicResourceItem) => (
+                  <li key={it.id} className="flex items-center justify-between gap-3 rounded-md border p-2">
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium truncate">{it.title}</div>
+                      <div className="text-xs text-gray-600 truncate">
+                        {it.type === 'link' ? `🔗 ${it.link?.url}` : `📄 ${it.file?.fileName || it.file?.url}`}
+                      </div>
+                    </div>
+                    {it.type === 'link' ? (
+                      <a href={it.link?.url} target="_blank" rel="noreferrer" className="inline-flex">
+                        <Button>Open</Button>
+                      </a>
+                    ) : (
+                      <a href={it.file?.url} target="_blank" rel="noreferrer" className="inline-flex" download>
+                        <Button>Download</Button>
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+} */}
+
+
       </div>
 
       <aside className="card p-4 h-fit space-y-3">
-        <div className="text-2xl font-bold text-primary">{priceLabel}</div>
+        {/* <div className="text-2xl font-bold text-primary">{priceLabel}</div> */}
+        <div className="text-2xl font-bold text-primary">Included with active membership</div>
+
         {resource.pricing?.includedInMembership && (
           <div className="text-xs text-green-700">Included with active membership</div>
         )}
