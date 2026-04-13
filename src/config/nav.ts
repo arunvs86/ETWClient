@@ -1,5 +1,6 @@
 export const NAV_PUBLIC = [
   { to: "/billing/plans", label: "Membership" },
+  { to: "/reels", label: "Health tips" },
 ];
 
 export const NAV_AUTH = [

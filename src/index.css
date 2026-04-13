@@ -1,28 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #F6F4F1;
+  --color-bg: #EEE9F8;
   --color-surface: #FFFFFF;
   --color-text: #0F172A;
   --color-primary: #4682B4;
-  --color-accent: #4682B4;
+  --color-accent: #6C63FF;
   --color-highlight: #F4A261;
   --color-warning: #E76F51;
-  --color-muted: #E9C46A;
-  --color-border: #E5E7EB;
-  --radius-lg: 12px;
-  --shadow-card: 0 2px 10px rgba(0,0,0,0.04);
+  --color-muted: #A78BFA;
+  --color-border: #E4DFEF;
+  --radius-lg: 14px;
+  --shadow-card: 0 2px 4px rgba(99,70,200,0.06), 0 8px 24px rgba(99,70,200,0.10);
 }
 
 @layer base {
   html, body, #root { height: 100%; }
-  body { @apply bg-bg text-text antialiased; }
+
+  body {
+    @apply text-text antialiased;
+    min-height: 100vh;
+    background: linear-gradient(135deg,
+      #dcd3f5 0%,
+      #e8e0fa 15%,
+      #d8e8f8 35%,
+      #cfe0f5 50%,
+      #ddd5f5 65%,
+      #e5d8fb 80%,
+      #ccd8f2 100%
+    );
+    background-attachment: fixed;
+  }
+
   a { @apply text-accent hover:underline; }
-  :focus-visible { @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg; }
+  :focus-visible { @apply outline-none ring-2 ring-accent ring-offset-2; }
 }
 
 @utility container-app { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
-@layer components { .card { @apply bg-surface border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-card)]; } }
+
+@layer components {
+  .card {
+    @apply bg-surface border rounded-[var(--radius-lg)];
+    border-color: rgba(255,255,255,0.85);
+    box-shadow: var(--shadow-card);
+  }
+}
 
 .card-shell { min-width: 78vw; max-width: 82vw; }
 @media (min-width: 420px) { .card-shell { min-width: 320px; max-width: 360px; } }
@@ -38,9 +60,9 @@
 .arrow-btn {
   position: absolute; top: 50%; transform: translateY(-50%);
   z-index: 10; height: 38px; width: 38px; display: grid; place-items: center;
-  border-radius: 9999px; border: 1px solid rgba(0,0,0,0.08);
-  background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  border-radius: 9999px; border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.6); backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(99,70,200,0.12);
   transition: opacity .15s ease, transform .15s ease;
 }
 .arrow-btn:hover { transform: translateY(-50%) scale(1.05); }
-

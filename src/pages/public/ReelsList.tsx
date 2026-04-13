@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { listResources } from '@/lib/resources.api'
+import { apiPublic } from '@/lib/api'
+import type { ResourceListResponse } from '@/lib/resources.api'
 
 function extractReelCode(url: string): string | null {
   const match = url.match(/instagram\.com\/reels?\/([A-Za-z0-9_-]+)/)
@@ -9,7 +10,7 @@ function extractReelCode(url: string): string | null {
 export default function ReelsList() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['reels'],
-    queryFn: () => listResources({ isReel: 'true', limit: 50 }),
+    queryFn: () => apiPublic.get<ResourceListResponse>('/resources', { params: { isReel: 'true', limit: 50 } }).then(r => r.data),
     staleTime: 60_000,
   })
 

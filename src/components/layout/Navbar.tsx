@@ -191,9 +191,11 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav aria-label="Primary" className="ml-auto hidden md:flex items-center gap-1">
-            <NavLink to="/tutors" className={navClass}>
-              {withIcon(Users, 'Tutors')}
-            </NavLink>
+            {isAuthed && (
+              <NavLink to="/tutors" className={navClass}>
+                {withIcon(Users, 'Tutors')}
+              </NavLink>
+            )}
 
             {isAuthed ? (
               <>
@@ -401,14 +403,16 @@ export default function Navbar() {
 
             <div className="mt-4 grid gap-2 overflow-y-auto">
               <div className="text-[11px] uppercase tracking-wide text-slate-500 px-1">Explore</div>
-              <NavLink
-                to="/tutors"
-                className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2"
-                onClick={() => setDrawerOpen(false)}
-              >
-                <Users className="h-4 w-4" />
-                Tutors
-              </NavLink>
+              {isAuthed && (
+                <NavLink
+                  to="/tutors"
+                  className="rounded-xl border px-3 py-3 text-sm inline-flex items-center gap-2"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  <Users className="h-4 w-4" />
+                  Tutors
+                </NavLink>
+              )}
 
               {isAuthed ? (
                 <>
