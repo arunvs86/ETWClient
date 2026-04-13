@@ -109,7 +109,7 @@ export default function ResourcePublic() {
         ) : (
           <div className="card p-4">
             <h3 className="font-medium mb-2">What you’ll get</h3>
-            <p className="text-sm text-gray-700">Purchase to unlock all files and links in this pack.</p>
+            <p className="text-sm text-gray-700">Purchase membership to unlock all files and links in this pack.</p>
           </div>
         )}
 
@@ -148,11 +148,11 @@ export default function ResourcePublic() {
         {/* <div className="text-2xl font-bold text-primary">{priceLabel}</div> */}
         <div className="text-2xl font-bold text-primary">Included with active membership</div>
 
-        {resource.pricing?.includedInMembership && (
+        {/* {resource.pricing?.includedInMembership && (
           <div className="text-xs text-green-700">Included with active membership</div>
-        )}
+        )} */}
 
-        {!showItems && (
+        {/* {!showItems && (
           <Button
             full
             onClick={() => mCheckout.mutate(String(resource.id || (resource as any)._id))}
@@ -160,7 +160,7 @@ export default function ResourcePublic() {
           >
             {mCheckout.isPending ? 'Redirecting…' : 'Buy resource'}
           </Button>
-        )}
+        )} */}
 
         {showItems && !isFree && <div className="text-xs text-gray-600">You own this resource.</div>}
 

@@ -224,7 +224,7 @@ export default function EbookPublic() {
               )
             ) : (
               <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-                <Lock className="h-4 w-4" /> Purchase to unlock the ebook.
+                <Lock className="h-4 w-4" /> Purchase membership to unlock the ebook.
               </div>
             )}
           </div>
@@ -232,91 +232,100 @@ export default function EbookPublic() {
 
         {/* Sidebar (Richer Pricing + CTA) */}
         <aside className="h-fit lg:sticky lg:top-24">
-          <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
+          {/* <div className="overflow-hidden rounded-2xl border bg-white shadow-sm"> */}
             {/* Price header with gradient */}
-            <div className="relative border-b bg-gradient-to-r from-primary/10 via-transparent to-primary/10 p-4">
-              {ebook.pricing?.includedInMembership && (
+            {/* <div className="relative border-b bg-gradient-to-r from-primary/10 via-transparent to-primary/10 p-4"> */}
+              {/* {ebook.pricing?.includedInMembership && (
                 <div className="absolute right-3 top-3 rounded-full bg-green-50 px-2 py-0.5 text-[11px] font-medium text-green-700">
                   Included in membership
                 </div>
-              )}
+              )} */}
               <div className="flex items-end gap-2">
-                <div className="text-2xl font-bold text-gray-900">{priceLabel}</div>
-                {!isFree && <span className="mb-0.5 text-xs text-gray-500">one-time</span>}
+                {/* <div className="text-2xl font-bold text-gray-900">{priceLabel}</div> */}
+                {/* {!isFree && <span className="mb-0.5 text-xs text-gray-500">one-time</span>} */}
               </div>
               {/* {!showItems && !isFree && (
                 <div className="mt-1 text-xs text-gray-600">
                   Instant access to <b>{items.length}</b> item{items.length === 1 ? '' : 's'}.
                 </div>
               )} */}
-            </div>
+            {/* </div> */}
 
             {/* Benefits / trust */}
             {!showItems && (
-              <ul className="px-4 pt-3 space-y-2 text-sm">
-                <li className="flex items-center gap-2 text-gray-700">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  High-quality downloads & links
-                </li>
-                <li className="flex items-center gap-2 text-gray-700">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                  Lifetime access to purchased files
-                </li>
-                {ebook.pricing?.includedInMembership && (
-                  <li className="flex items-center gap-2 text-gray-700">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                    Free for members
-                  </li>
-                )}
-              </ul>
+              // // <ul className="px-4 pt-3 space-y-2 text-sm">
+              // //   <li className="flex items-center gap-2 text-gray-700">
+              // //     <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              // //     High-quality downloads & links
+              // //   </li>
+              // //   <li className="flex items-center gap-2 text-gray-700">
+              // //     <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              // //     Lifetime access to purchased files
+              // //   </li>
+              // //   {ebook.pricing?.includedInMembership && (
+              // //     <li className="flex items-center gap-2 text-gray-700">
+              // //       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              // //       Free for members
+              // //     </li>
+              // //   )}
+              // </ul>
+              <p>
+
+              </p>
             )}
 
             {/* CTA */}
             <div className="p-4">
               {!showItems ? (
-                <button
-                  onClick={() => mCheckout.mutate(String(ebook.id || (ebook as any)._id))}
-                  disabled={mCheckout.isPending}
-                  className="
-                    group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden
-                    rounded-xl bg-primary px-4 py-2.5 text-white shadow-sm transition
-                    hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70
-                  "
-                >
-                  {/* glossy shine */}
-                  <span
-                    className="
-                      pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0
-                      transition-transform duration-700 group-hover:translate-x-full
-                    "
-                  />
-                  {mCheckout.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Redirecting…
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="h-4 w-4" />
-                      Buy ebook
-                    </>
-                  )}
-                </button>
+                // <button
+                //   onClick={() => mCheckout.mutate(String(ebook.id || (ebook as any)._id))}
+                //   disabled={mCheckout.isPending}
+                //   className="
+                //     group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden
+                //     rounded-xl bg-primary px-4 py-2.5 text-white shadow-sm transition
+                //     hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70
+                //   "
+                // >
+                //   {/* glossy shine */}
+                //   <span
+                //     className="
+                //       pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0
+                //       transition-transform duration-700 group-hover:translate-x-full
+                //     "
+                //   />
+                //   {mCheckout.isPending ? (
+                //     <>
+                //       <Loader2 className="h-4 w-4 animate-spin" />
+                //       Redirecting…
+                //     </>
+                //   ) : (
+                //     <>
+                //       <ShoppingCart className="h-4 w-4" />
+                //       Buy ebook
+                //     </>
+                //   )}
+                // </button>
+                <p>
+
+                </p>
               ) : !isFree ? (
-                <div className="rounded-lg border border-green-200 bg-green-50 p-2 text-[12px] text-green-800">
-                  <ShieldCheck className="mr-1 inline-block h-4 w-4 align-text-bottom" />
-                  You own this ebook.
-                </div>
+                // <div className="rounded-lg border border-green-200 bg-green-50 p-2 text-[12px] text-green-800">
+                //   <ShieldCheck className="mr-1 inline-block h-4 w-4 align-text-bottom" />
+                //   You own this ebook.
+                // </div>
+                <p>
+
+                </p>
               ) : null}
 
               {/* Secure notice */}
-              <div className="mt-3 flex items-center justify-center gap-2 text-[11px] text-gray-500">
+              {/* <div className="mt-3 flex items-center justify-center gap-2 text-[11px] text-gray-500">
                 <Shield className="h-3.5 w-3.5" />
                 Secure Stripe checkout
-              </div>
+              </div> */}
 
               {/* Meta */}
-              <div className="mt-3 border-t pt-3 text-xs text-gray-600">
+              {/* <div className="mt-3 border-t pt-3 text-xs text-gray-600">
                 {ebook.category && (
                   <div>
                     Category: <b className="text-gray-800">{ebook.category}</b>
@@ -328,7 +337,7 @@ export default function EbookPublic() {
                     Published: {new Date(ebook.publishedAt).toLocaleDateString()}
                   </div>
                 )}
-              </div>
+              </div> */}
 
               {/* Mobile thumb (if not shown on left) */}
               {ebook.thumbnail && (
@@ -344,7 +353,7 @@ export default function EbookPublic() {
                 </div>
               )}
             </div>
-          </div>
+          {/* </div> */}
         </aside>
       </div>
     </div>

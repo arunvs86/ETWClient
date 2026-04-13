@@ -759,20 +759,20 @@ export default function Home() {
             <div className="flex flex-wrap gap-3">
               {state === 'GUEST' && (
                 <>
-                  <Link to="/billing/plans"><Button className="rounded-xl h-11 px-5">Subscribe</Button></Link>
-                  <Link to="/courses"><Button variant="secondary" className="rounded-xl h-11 px-5">Explore Courses</Button></Link>
+                  <Link to="/billing/plans"><Button className="rounded-xl h-11 px-5">Buy Membership</Button></Link>
+                  {/* <Link to="/courses"><Button variant="secondary" className="rounded-xl h-11 px-5">Explore Courses</Button></Link> */}
                 </>
               )}
-              {state === 'USER_NO_MEM' && (
+              {/* {state === 'USER_NO_MEM' && (
                 <>
                   <Link to="/billing/plans"><Button className="rounded-xl h-11 px-5">Get Lifetime</Button></Link>
                   <Link to="/live"><Button variant="secondary" className="rounded-xl h-11 px-5">Browse Courses</Button></Link>
                 </>
-              )}
+              )} */}
               {state === 'USER_MEM' && (
                 <>
                   {/* <Link to="/live"><Button className="rounded-xl h-11 px-5">Go to My Learning</Button></Link> */}
-                  <Link to="/live"><Button variant="secondary" className="rounded-xl h-11 px-5">Browse Courses</Button></Link>
+                  {/* <Link to="/live"><Button variant="secondary" className="rounded-xl h-11 px-5">Browse Courses</Button></Link> */}
                 </>
               )}
             </div>
@@ -811,7 +811,7 @@ export default function Home() {
       {state !== 'GUEST' && <ContinueLearningRail />}
 
       {/* Live sessions (already public + responsive) */}
-      <UpcomingLiveSessions limit={6} />
+      {/* <UpcomingLiveSessions limit={6} /> */}
 
       {/* Why choose – hide for members (glass cards to match hero) */}
       {state !== 'USER_MEM' && (
